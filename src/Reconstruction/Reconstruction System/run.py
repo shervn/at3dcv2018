@@ -13,6 +13,6 @@ if __name__ == "__main__":
     register = True
     refine = True
     integrate = True
-    debug_mode = True
+    debug_mode = False
 
     run_system(config, make, register, refine, integrate, debug_mode)
