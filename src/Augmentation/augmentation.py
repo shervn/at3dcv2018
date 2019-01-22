@@ -1,19 +1,13 @@
 import numpy as np
 from open3d import *
 import copy
-import sys,os
 from collections import defaultdict
 
 from utils import helper
 from utils.icp_helper import get_registeration
 from utils.vis_helper import *
 
-rel_path = os.path.realpath('')
-reconstructed_scene = rel_path + '/Samples/scene0000_01_vh_clean_2.ply'
-segmented_reconstructed_scene = rel_path + '/Samples/scene0000_01_vh_clean_2.labels.ply'
-bed_pc_name = rel_path + '/Samples/new_bed.ply'
-
-bed_hash = '1.0-0.7333333333333333-0.47058823529411764'
+from config import *
 
 class Augmentor:
 
@@ -47,7 +41,7 @@ class Augmentor:
         scene_without_old_object = self.remove_object_with_index(object_to_change_hash)
         old_object = self.get_object_with_hashed_color(object_to_change_hash)
 
-        source = self.__get_new_object_from_dataset(object_to_change_hash)
+        source = self.__get_new_object_from_dataset(object_to_change)
 
         transformed_new_object = self.__automated_registraion(source, old_object)
 
@@ -55,13 +49,11 @@ class Augmentor:
 
     def __get_hashed_color_of_object_from_name(self, object_name):
 
-        if(object_name is 'bed'):
-            return bed_hash
+        return objects_hash[object_name] 
 
-    def __get_new_object_from_dataset(self, hashed_color):
+    def __get_new_object_from_dataset(self, object_name, index=0):
 
-        if(hashed_color is bed_hash):
-            return read_point_cloud(bed_pc_name)
+        return read_point_cloud(new_objects_address[object_name][index])
 
     def __automated_registraion(self, source, target):
 
@@ -72,17 +64,8 @@ class Augmentor:
 
         return (source_temp)
 
-    def __pypcd_registration(self, source, target, number_of_iterations):
-        #not usefull. not using
-
-        transformation = self.__run_icp_with_pycpd(source, target, number_of_iterations)
-        source_temp = copy.deepcopy(source)
-        source_temp.transform(transformation)
-
-        return (source_temp)
-
     def __manual_registration(self, source, target):
-        #not usefull. not using. could be the next best thing to do.
+        #not using. could be the next best thing to do.
 
         picked_id_source = bed_pc_corners #ACCORDING TO t
 
@@ -110,26 +93,6 @@ class Augmentor:
         source_temp.transform(reg_p2p.transformation)
 
         return (source_temp)
-
-    def __run_icp_with_pycpd(self, source, target, iterations):
-        #not usefull. not using.
-
-        iterations = 100
-
-        X = helper.make_pc_ready_for_pycpd(source, downsample = 10)
-        Y = helper.make_pc_ready_for_pycpd(target, downsample = 1)
-
-        T = np.zeros((4, 4))
-        reg = rigid_registration(**{ 'X': Y, 'Y': X })
-        reg.max_iterations = iterations
-
-        reg.register()
-
-        T[0:3, 0:3] = reg.R
-        T[3,3] = 1
-        T[0:3, 3] = np.transpose(reg.t)
-
-        return T
 
     def __change_color(self, object, color):
         object_tmp = copy.deepcopy(object)

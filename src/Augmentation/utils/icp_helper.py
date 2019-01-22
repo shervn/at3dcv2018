@@ -32,7 +32,7 @@ def prepare_dataset(source, target, voxel_size):
 
 def execute_global_registration(
         source_down, target_down, source_fpfh, target_fpfh, voxel_size):
-    distance_threshold = voxel_size * 1.5
+    distance_threshold = voxel_size * 1.0
 
     result = registration_ransac_based_on_feature_matching(
             source_down, target_down, source_fpfh, target_fpfh,
