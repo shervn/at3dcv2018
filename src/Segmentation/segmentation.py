@@ -2,7 +2,7 @@ from open3d import *
 
 labled_name = '../Samples/scene0000_00_vh_clean_2.labels.ply'
 
-class Segmantor:
+class Segmenter:
     def __init__(self, raw_pointcloud):
         self.raw_pointcloud = raw_pointcloud
         self.__segment()
