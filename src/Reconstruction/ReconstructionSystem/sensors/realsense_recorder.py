@@ -49,22 +49,17 @@ def save_intrinsic_as_json(filename, frame):
                 intrinsics.ppx, intrinsics.ppy, 1]},
                 outfile, indent=4)
 
-def realsense_recorder(output_folder, record_rosbag, record_imgs, playback_rosbag):
+def realsense_recorder(output_folder):
 
     path_output = output_folder
     path_depth = join(output_folder, "depth")
     path_color = join(output_folder, "color")
-    if record_imgs:
-        make_clean_folder(path_output)
-        make_clean_folder(path_depth)
-        make_clean_folder(path_color)
+
+    make_clean_folder(path_output)
+    make_clean_folder(path_depth)
+    make_clean_folder(path_color)
 
     path_bag = join(output_folder, "realsense.bag")
-    if record_rosbag:
-        if exists(path_bag):
-            user_input = input("%s exists. Overwrite? (y/n) : " % path_bag)
-            if user_input.lower() == 'n':
-                exit()
 
     # Create a pipeline
     pipeline = rs.pipeline()
@@ -73,23 +68,16 @@ def realsense_recorder(output_folder, record_rosbag, record_imgs, playback_rosba
     #  different resolutions of color and depth streams
     config = rs.config()
 
-    if record_imgs or record_rosbag:
-        # note: using 640 x 480 depth resolution produces smooth depth boundaries
-        #       using rs.format.bgr8 for color image format for OpenCV based image visualization
-        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-        if record_rosbag:
-            config.enable_record_to_file(path_bag)
-    if playback_rosbag:
-        config.enable_device_from_file(path_bag, repeat_playback = True)
+    config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 15)
 
     # Start streaming
     profile = pipeline.start(config)
     depth_sensor = profile.get_device().first_depth_sensor()
 
     # Using preset HighAccuracy for recording
-    if record_rosbag or record_imgs:
-        depth_sensor.set_option(rs.option.visual_preset, Preset.HighAccuracy)
+
+    depth_sensor.set_option(rs.option.visual_preset, Preset.HighAccuracy)
 
     # Getting the depth sensor's depth scale (see rs-align example for explanation)
     depth_scale = depth_sensor.get_depth_scale()
@@ -126,16 +114,16 @@ def realsense_recorder(output_folder, record_rosbag, record_imgs, playback_rosba
             depth_image = np.asanyarray(aligned_depth_frame.get_data())
             color_image = np.asanyarray(color_frame.get_data())
 
-            if record_imgs:
-                if frame_count == 0:
-                    save_intrinsic_as_json(join(output_folder,
-                            "camera_intrinsic.json"), color_frame)
-                cv2.imwrite("%s/%06d.png" % \
-                        (path_depth, frame_count), depth_image)
-                cv2.imwrite("%s/%06d.jpg" % \
-                        (path_color, frame_count), color_image)
-                print("Saved color + depth image %06d" % frame_count)
-                frame_count += 1
+
+            if frame_count == 0:
+                save_intrinsic_as_json(join(output_folder,
+                        "camera_intrinsic.json"), color_frame)
+            cv2.imwrite("%s/%06d.png" % \
+                    (path_depth, frame_count), depth_image)
+            cv2.imwrite("%s/%06d.jpg" % \
+                    (path_color, frame_count), color_image)
+            print("Saved color + depth image %06d" % frame_count)
+            frame_count += 1
 
             # Remove background - Set pixels further than clipping_distance to grey
             grey_color = 153

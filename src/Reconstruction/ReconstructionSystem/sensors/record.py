@@ -1,13 +1,16 @@
-# python realsense_recoder.py --record_imgs
 import sys
 sys.path.append(".")
+import json
 from realsense_recorder import realsense_recorder
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
+def record():
 
-    output_folder = "../dataset/realsense/"
-    record_rosbag = False
-    record_imgs = True
-    playback_rosbag = False
+    config = "Reconstruction/ReconstructionSystem/config/realsense.json"
+    if config is not None:
+        with open(config) as json_file:
+            config = json.load(json_file)
 
-    realsense_recorder(output_folder, record_rosbag, record_imgs, playback_rosbag)
+    output_folder = config['path_dataset']
+
+    realsense_recorder(output_folder)

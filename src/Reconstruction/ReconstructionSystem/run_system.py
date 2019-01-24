@@ -9,8 +9,8 @@ import sys
 import json
 import argparse
 import time, datetime
-sys.path.append("../Utility")
-# sys.path.append("../Utility")
+sys.path.append("Reconstruction/Utility")
+# sys.path.append("/home/pti/Downloads/tum/at3dcv/project/at3dcv2018/src/Reconstruction/Utility")
 from file import *
 sys.path.append(".")
 from initialize_config import *
@@ -62,7 +62,7 @@ def run_system(config, make, register, refine, integrate, debug_mode):
     if integrate:
         start_time = time.time()
         import integrate_scene
-        integrate_scene.run(config)
+        mesh = integrate_scene.run(config)
         times[3] = time.time() - start_time
 
     print("====================================")
@@ -74,3 +74,4 @@ def run_system(config, make, register, refine, integrate, debug_mode):
     print("- Integrate frames    %s" % datetime.timedelta(seconds=times[3]))
     print("- Total               %s" % datetime.timedelta(seconds=sum(times)))
     sys.stdout.flush()
+    return mesh

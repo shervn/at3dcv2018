@@ -108,6 +108,9 @@ def integrate_rgb_frames_for_fragment(color_files, depth_files,
                     color_files[i_abs], depth_files[i_abs], False, config)
         pose = pose_graph.nodes[i].pose
         volume.integrate(rgbd, intrinsic, np.linalg.inv(pose))
+        # mesh = volume.extract_triangle_mesh()   # for each frame?
+        # draw_geometries([mesh])
+
     mesh = volume.extract_triangle_mesh()
     mesh.compute_vertex_normals()
     return mesh
@@ -115,6 +118,7 @@ def integrate_rgb_frames_for_fragment(color_files, depth_files,
 
 def make_pointcloud_for_fragment(path_dataset, color_files, depth_files,
         fragment_id, n_fragments, intrinsic, config):
+
     mesh = integrate_rgb_frames_for_fragment(
             color_files, depth_files, fragment_id, n_fragments,
             join(path_dataset,

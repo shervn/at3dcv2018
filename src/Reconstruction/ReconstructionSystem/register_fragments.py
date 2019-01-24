@@ -69,6 +69,7 @@ def compute_initial_registration(s, t, source_down, target_down,
         if not success:
             print("No resonable solution. Skip this pair")
             return (False, np.identity(4), np.zeros((6,6)))
+    print("transformation")
     print(transformation)
 
     if config["debug_mode"]:

@@ -43,11 +43,13 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
 
     mesh = volume.extract_triangle_mesh()
     mesh.compute_vertex_normals()
+    # draw_geometries([mesh])
     if config["debug_mode"]:
         draw_geometries([mesh])
 
     mesh_name = join(path_dataset, config["template_global_mesh"])
     write_triangle_mesh(mesh_name, mesh, False, True)
+    return mesh
 
 
 def run(config):
@@ -57,4 +59,5 @@ def run(config):
     else:
         intrinsic = PinholeCameraIntrinsic(
                 PinholeCameraIntrinsicParameters.PrimeSenseDefault)
-    scalable_integrate_rgb_frames(config["path_dataset"], intrinsic, config)
+    mesh = scalable_integrate_rgb_frames(config["path_dataset"], intrinsic, config)
+    return mesh
