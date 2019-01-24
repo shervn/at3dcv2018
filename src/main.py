@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import (QWidget, QToolTip,
     QPushButton, QApplication)
 from PyQt5.QtGui import QFont
 
-from Augmentation.augmentation import Augmentor
-from Segmentation.segmentation import Segmantor
+#from Augmentation.augmentation import Augmentor
+#from Segmentation.segmentation import Segmenter
 from Reconstruction.reconstruction import Reconstructor
 
 sys.path.append("Reconstruction/ReconstructionSystem/sensors")
@@ -42,10 +42,10 @@ class View(QWidget):
         self.r = Reconstructor()
 
     def Segment(self):
-        self.s = Segmantor(self.r.reconstructed_pointcloud)
+        self.s = Segmenter(self.r.reconstructed_pointcloud)
 
     def Augmentor(self):
-        self.t = Augmentor(s.labled_pointcloud)
+        self.t = Augmentor(self.s.labled_pointcloud)
 
 
 if __name__ == '__main__':
