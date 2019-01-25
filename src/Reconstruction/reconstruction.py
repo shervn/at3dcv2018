@@ -4,9 +4,10 @@ from open3d import *
 import sys
 import os
 # sys.path.append(".")
-sys.path.append("Reconstruction/ReconstructionSystem")
+rel_path = os.path.realpath('')
+sys.path.append(rel_path + '/src/Reconstruction/ReconstructionSystem/')
 from run_system import run_system
-sys.path.append("Reconstruction/ReconstructionSystem/sensors")
+sys.path.append(rel_path + '/src/Reconstruction/ReconstructionSystem/sensors')
 from record import record
 
 

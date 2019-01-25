@@ -9,7 +9,9 @@ import sys
 import json
 import argparse
 import time, datetime
-sys.path.append("Reconstruction/Utility")
+
+rel_path = os.path.realpath('')
+sys.path.append(rel_path + '/src/Reconstruction/Utility')
 # sys.path.append("/home/pti/Downloads/tum/at3dcv/project/at3dcv2018/src/Reconstruction/Utility")
 from file import *
 sys.path.append(".")

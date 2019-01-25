@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from PyQt5.QtWidgets import (QWidget, QToolTip,
     QPushButton, QApplication)
 from PyQt5.QtGui import QFont
@@ -7,7 +7,8 @@ from PyQt5.QtGui import QFont
 #from Segmentation.segmentation import Segmenter
 from Reconstruction.reconstruction import Reconstructor
 
-sys.path.append("Reconstruction/ReconstructionSystem/sensors")
+rel_path = os.path.realpath('')
+sys.path.append(rel_path + '/src/Reconstruction/ReconstructionSystem/sensors')
 from record import record
 
 
