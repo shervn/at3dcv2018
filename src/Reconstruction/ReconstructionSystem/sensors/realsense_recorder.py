@@ -10,6 +10,9 @@ import shutil
 import json
 from enum import IntEnum
 
+from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox
+
+
 try:
     # Python 2 compatible
     input = raw_input
@@ -26,16 +29,16 @@ class Preset(IntEnum):
     MediumDensity = 5
 
 
-def make_clean_folder(path_folder):
-    if not exists(path_folder):
-        makedirs(path_folder)
-    else:
-        user_input = input("%s not empty. Overwrite? (y/n) : " % path_folder)
-        if user_input.lower() == 'y':
-            shutil.rmtree(path_folder)
-            makedirs(path_folder)
-        else:
-            exit()
+# def make_clean_folder(path_folder):
+#     if not exists(path_folder):
+#         makedirs(path_folder)
+#     else:
+#         user_input = input("%s not empty. Overwrite? (y/n) : " % path_folder)
+#         if user_input.lower() == 'y':
+#             shutil.rmtree(path_folder)
+#             makedirs(path_folder)
+#         else:
+#             exit()
 
 
 def save_intrinsic_as_json(filename, frame):
@@ -55,11 +58,9 @@ def realsense_recorder(output_folder):
     path_depth = join(output_folder, "depth")
     path_color = join(output_folder, "color")
 
-    make_clean_folder(path_output)
-    make_clean_folder(path_depth)
-    make_clean_folder(path_color)
-
-    path_bag = join(output_folder, "realsense.bag")
+    # make_clean_folder(path_output)
+    # make_clean_folder(path_depth)
+    # make_clean_folder(path_color)
 
     # Create a pipeline
     pipeline = rs.pipeline()
