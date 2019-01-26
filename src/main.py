@@ -1,14 +1,15 @@
-import sys, os
+import sys
+
 from PyQt5.QtWidgets import (QWidget, QToolTip,
     QPushButton, QApplication)
 from PyQt5.QtGui import QFont
 
-#from Augmentation.augmentation import Augmentor
-#from Segmentation.segmentation import Segmenter
 from Reconstruction.reconstruction import Reconstructor
+from Segmentation.segmentation import Segmenter
+from Augmentation.augmentation import Augmentor
 
-rel_path = os.path.realpath('')
-sys.path.append(rel_path + '/src/Reconstruction/ReconstructionSystem/sensors')
+from paths import sensors
+
 from record import record
 
 
@@ -50,6 +51,7 @@ class View(QWidget):
 
 
 if __name__ == '__main__':
+
     app = QApplication(sys.argv)
     view = View()
     sys.exit(app.exec_())

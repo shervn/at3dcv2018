@@ -8,7 +8,8 @@ import numpy as np
 import math
 import sys
 from open3d import *
-sys.path.append("../Utility")
+from paths import utility
+sys.path.append(utility)
 from file import *
 sys.path.append(".")
 from make_fragments import *
