@@ -3,10 +3,12 @@ from open3d import *
 
 import sys
 import os
-# sys.path.append(".")
-sys.path.append("Reconstruction/ReconstructionSystem")
+from paths import reconstruction_system, reconstruction_config, sensors
+
+sys.path.append(reconstruction_system)
 from run_system import run_system
-sys.path.append("Reconstruction/ReconstructionSystem/sensors")
+
+sys.path.append(sensors)
 from record import record
 
 
@@ -18,7 +20,7 @@ class Reconstructor:
         # record()
 
         # perform 3d reconstruction
-        config = "Reconstruction/ReconstructionSystem/config/realsense.json"
+        config = reconstruction_config
         make = True
         register = True
         refine = True
