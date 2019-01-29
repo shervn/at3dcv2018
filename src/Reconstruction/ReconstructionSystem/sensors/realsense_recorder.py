@@ -15,9 +15,6 @@ import json
 from os import makedirs
 from enum import IntEnum
 
-from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox
-
-
 try:
     # Python 2 compatible
     input = raw_input
