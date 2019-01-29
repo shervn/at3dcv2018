@@ -10,8 +10,8 @@ import json
 import argparse
 import time, datetime
 
-from paths import utility
-
+from src.paths import utility
+print(utility)
 sys.path.append(utility)
 from file import *
 from initialize_config import *

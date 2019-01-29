@@ -7,14 +7,11 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread, QCoreApplication, Qt, QO
 
 from open3d import *
 
-from Augmentation.augmentation import Augmentor
-#from Segmentation.segmentation import Segmenter
+from src.Reconstruction.reconstruction import Reconstructor
+from src.Segmentation.segmentation import Segmenter
+from src.Augmentation.augmentation import Augmentor
 
-from Reconstruction.reconstruction import Reconstructor
-from Segmentation.segmentation import Segmenter
-from Augmentation.augmentation import Augmentor
-
-from paths import sensors
+# from paths import sensors
 
 import json
 from os import makedirs
