@@ -7,8 +7,11 @@
 import numpy as np
 from open3d import *
 import sys
-sys.path.append("../Utility")
+
+from paths import utility
+sys.path.append(utility)
 from file import *
+
 from visualization import *
 from optimize_posegraph import *
 from refine_registration import *

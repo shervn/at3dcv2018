@@ -1,13 +1,18 @@
 # pyrealsense2 is required.
 # Please see instructions in https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
+
+import sys, os
+rel_path = os.path.realpath('')
+sys.path.append(rel_path + '/pyrealsenseformac/')
+
 import pyrealsense2 as rs
 import numpy as np
 import cv2
 import argparse
-from os import makedirs
 from os.path import exists, join
 import shutil
 import json
+from os import makedirs
 from enum import IntEnum
 
 from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox

@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddf47483-2a29-4f7b-84f1-c3c322e508bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/librealsense2.2.18.0.dylib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/pybackend2.2.18.0.cpython-37m-darwin.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/pyrealsense2.2.18.0.cpython-37m-darwin.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paths.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Augmentation/augmentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Augmentation/augmentation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/integrate_scene.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/integrate_scene.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/make_fragments.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/make_fragments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/optimize_posegraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/optimize_posegraph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/refine_registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/refine_registration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/register_fragments.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/register_fragments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/run_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/run_system.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/realsense_recorder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/realsense_recorder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/record.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/record.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reconstruction/reconstruction.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reconstruction/reconstruction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,11 +38,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="99" column="42" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="323">
+              <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -42,7 +47,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Reconstruction/reconstruction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="17">
               <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="20" />
               <folding>
                 <element signature="e#1#21#0" expanded="true" />
@@ -54,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Augmentation/augmentation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+            <state relative-caret-position="2278">
+              <caret line="134" lean-forward="true" selection-start-line="134" selection-end-line="134" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -66,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/record.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="17">
               <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="49" />
             </state>
           </provider>
@@ -75,11 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/realsense_recorder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="137" column="50" lean-forward="true" selection-start-line="137" selection-start-column="50" selection-end-line="137" selection-end-column="50" />
-              <folding>
-                <element signature="e#132#157#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="2329">
+              <caret line="137" column="50" selection-start-line="137" selection-start-column="50" selection-end-line="137" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -145,7 +147,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -175,6 +176,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -349,11 +351,12 @@
       <workItem from="1548366415063" duration="255000" />
       <workItem from="1548366686756" duration="3511000" />
       <workItem from="1548418173336" duration="1141000" />
+      <workItem from="1548796120493" duration="128000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38193000" />
+    <option name="totallyTimeSpent" value="38321000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
@@ -361,7 +364,7 @@
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.5007752" side_tool="true" weight="0.29561752" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.4992248" visible="true" weight="0.3003984" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.4992248" visible="true" weight="0.2310757" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32868218" />
@@ -504,13 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/record.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/run_system.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-249">
@@ -521,29 +517,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Augmentation/augmentation.py">
+    <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/record.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Reconstruction/ReconstructionSystem/sensors/realsense_recorder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="137" column="50" lean-forward="true" selection-start-line="137" selection-start-column="50" selection-end-line="137" selection-end-column="50" />
-          <folding>
-            <element signature="e#132#157#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2329">
+          <caret line="137" column="50" selection-start-line="137" selection-start-column="50" selection-end-line="137" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Reconstruction/reconstruction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="17">
           <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="20" />
           <folding>
             <element signature="e#1#21#0" expanded="true" />
@@ -551,13 +541,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Augmentation/augmentation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2278">
+          <caret line="134" lean-forward="true" selection-start-line="134" selection-end-line="134" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="99" column="42" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="323">
+          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
         </state>
       </provider>
     </entry>

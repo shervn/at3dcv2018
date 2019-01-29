@@ -1,4 +1,5 @@
 import sys
+
 from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox
 from PyQt5.QtGui import QFont
 
@@ -6,9 +7,13 @@ from open3d import *
 
 from Augmentation.augmentation import Augmentor
 #from Segmentation.segmentation import Segmenter
-from Reconstruction.reconstruction import Reconstructor
 
-sys.path.append("Reconstruction/ReconstructionSystem/sensors")
+from Reconstruction.reconstruction import Reconstructor
+from Segmentation.segmentation import Segmenter
+from Augmentation.augmentation import Augmentor
+
+from paths import sensors
+
 from record import record
 import json
 from realsense_recorder import realsense_recorder
@@ -101,6 +106,7 @@ class View(QWidget):
 
 
 if __name__ == '__main__':
+
     app = QApplication(sys.argv)
     view = View()
     sys.exit(app.exec_())
