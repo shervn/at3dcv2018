@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox, QVBoxLayout, \
-                            QMainWindow, QApplication, QHBoxLayout
+                            QMainWindow, QApplication, QHBoxLayout, QGridLayout
 from PyQt5.QtGui import QFont, QImage, QPainter
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread, QCoreApplication, Qt, QObject
 
@@ -51,9 +51,11 @@ class View(QMainWindow):
     def initUI(self):
 
         central_widget = QWidget()
-        layout = QHBoxLayout(central_widget)
+        layout = QGridLayout(central_widget)
 
         self.setCentralWidget(central_widget)
+
+
 
         self._thread = None
         if self._thread == None:
@@ -67,17 +69,28 @@ class View(QMainWindow):
         self.vid.VideoSignal.connect(image_viewer.setImage)
         self.sgnStop.connect(self.vid.stopVideo)
 
+
+
+
         # Button to start the videocapture:
-        push_button1 = QPushButton('Start')
-        push_button2 = QPushButton('Stop')
+        start_button = QPushButton('Start')
+        stop_button = QPushButton('Stop')
 
-        push_button1.clicked.connect(self.vid.startVideo)
-        push_button2.clicked.connect(self.disable)
+        start_button.clicked.connect(self.vid.startVideo)
+        start_button.setFixedWidth(100)
+        start_button.setFixedHeight(90)
+        stop_button.clicked.connect(self.disable)
+        stop_button.setFixedWidth(100)
+        stop_button.setFixedHeight(90)
 
-        layout.addWidget(image_viewer)
-        layout.addStretch()
-        layout.addWidget(push_button1)
-        layout.addWidget(push_button2)
+        # void QGridLayout::addWidget(QWidget * widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Qt::Alignment alignment = 0)
+
+        # layout.setContentsMargins(left, top, right, bottom)
+        layout.setContentsMargins(75, 100, 75, 50)
+        layout.addWidget(image_viewer, 1, 1, 2, 2)
+        # layout.addStretch()
+        layout.addWidget(start_button, 3, 0, 2, 1)
+        layout.addWidget(stop_button, 3, 1, 2, 1)
 
 
         # # button to record
@@ -91,17 +104,21 @@ class View(QMainWindow):
         # 3d reconstruction
         reconstruct_btn = QPushButton('Reconstruct', self)
         reconstruct_btn.clicked.connect(self.Reconstruct)
-        reconstruct_btn.resize(reconstruct_btn.sizeHint())
-        layout.addWidget(reconstruct_btn)
+        # reconstruct_btn.resize(reconstruct_btn.sizeHint())
+        reconstruct_btn.setFixedWidth(100)
+        reconstruct_btn.setFixedHeight(90)
+        layout.addWidget(reconstruct_btn, 3, 2, 2, 1)
 
         # Augmentation
         augment_btn = QPushButton('Augment', self)
         augment_btn.clicked.connect(self.Augment)
         augment_btn.resize(reconstruct_btn.sizeHint())
-        layout.addWidget(augment_btn)
+        augment_btn.setFixedWidth(100)
+        augment_btn.setFixedHeight(90)
+        layout.addWidget(augment_btn, 3, 3, 2, 1)
 
         # set geometry
-        self.setGeometry(0, 0, 2000, 800)
+        self.setGeometry(0, 0, 1000, 600)
         self.setWindowTitle('App')
         self.show()
 
