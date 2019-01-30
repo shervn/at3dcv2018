@@ -3,7 +3,10 @@ from open3d import *
 import copy
 from collections import defaultdict
 import sys
-sys.path.append("Augmentation")
+
+from paths import augmentation_util
+sys.path.append(augmentation_util)
+
 from utils import helper
 from utils.icp_helper import get_registeration
 from utils.vis_helper import *

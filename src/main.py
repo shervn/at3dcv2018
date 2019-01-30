@@ -7,9 +7,11 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread, QCoreApplication, Qt, QO
 
 from open3d import *
 
-from src.Reconstruction.reconstruction import Reconstructor
-from src.Segmentation.segmentation import Segmenter
-from src.Augmentation.augmentation import Augmentor
+from Reconstruction.reconstruction import Reconstructor
+from Segmentation.segmentation import Segmenter
+from Augmentation.augmentation import Augmentor
+
+from paths import camera_config_path
 
 # from paths import sensors
 
@@ -19,7 +21,11 @@ from os.path import exists, join
 import shutil
 from pyqtgraph import ImageView
 import cv2
+
+from paths import macpyrealsense2
+sys.path.append(macpyrealsense2)
 import pyrealsense2 as rs
+
 import numpy as np
 import argparse
 from enum import IntEnum
@@ -113,7 +119,8 @@ class View(QMainWindow):
 
     def Record(self):
 
-        config = "Reconstruction/ReconstructionSystem/config/realsense.json"
+        config = camera_config_path
+
         if config is not None:
             with open(config) as json_file:
                 config = json.load(json_file)
@@ -199,7 +206,7 @@ class ShowVideo(QObject):
 
         print("start videoooooooooooooooooo")
         self._running = True
-        config = "Reconstruction/ReconstructionSystem/config/realsense.json"
+        config = camera_config_path
         if config is not None:
             with open(config) as json_file:
                 config = json.load(json_file)
@@ -344,4 +351,3 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     view = View()
     sys.exit(app.exec_())
-
