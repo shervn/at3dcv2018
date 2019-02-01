@@ -4,7 +4,7 @@ This is a project for "Advanced Topics in 3D Computer Vision" Praktikum course, 
 
 ## Getting Started
 
-These instructions will help you running on your local machine.
+These instructions will help you running the code on your local machine.
 
 ### Prerequisites
 
@@ -15,7 +15,7 @@ These instructions will help you running on your local machine.
 
 ### Running
 
-To run the whole pipline with UI, jut go the root directory and run.
+To run the whole pipline with UI, go to the root directory and run main.py.
 ```
 python main.py
 ```
