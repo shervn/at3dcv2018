@@ -1,6 +1,12 @@
 # pyrealsense2 is required.
 # Please see instructions in https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python
+import sys
+
+from paths import macpyrealsense2
+sys.path.append(macpyrealsense2)
 import pyrealsense2 as rs
+import pyrealsense2 as rs
+
 from open3d import *
 import numpy as np
 from enum import IntEnum
