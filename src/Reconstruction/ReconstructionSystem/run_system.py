@@ -10,8 +10,12 @@ import json
 import argparse
 import time, datetime
 
+# sys.path.append('src/Reconstruction')
+
 from paths import utility
-print(utility)
+# print("here")
+# print(os.getcwd())
+
 sys.path.append(utility)
 from file import *
 from initialize_config import *

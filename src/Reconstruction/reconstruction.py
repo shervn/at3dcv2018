@@ -3,8 +3,13 @@ from open3d import *
 import sys
 import os
 # print(os.listdir())
+# print("here")
+print(os.getcwd())
+print(os.listdir())
+# sys.path.append('Reconstruction')
 from paths import reconstruction_system, reconstruction_config, sensors
-print(reconstruction_system)
+# print(reconstruction_system)
+
 sys.path.append(reconstruction_system)
 from run_system import run_system
 
