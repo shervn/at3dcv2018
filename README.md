@@ -1,6 +1,6 @@
 # at3dcv
 
-This is a project for "Advanced Topics in 3D Computer Vision" Praktikum course, offered by TUM in Winter Semeser 2019. In this project, we have implemented a pipline to do a 3D recunstrion of a scene, using a depth camera, segment the objects and then use the data to do augmentations.
+This is a project for "Advanced Topics in 3D Computer Vision" Praktikum course, offered by TUM in Winter Semester 2019. In this project, we have implemented a pipline to do a 3D recunstrion of a scene, using a depth camera, segment the objects and then use the data to do augmentations.
 
 ## Getting Started
 
