@@ -9,7 +9,7 @@ These instructions will help you running the code on your local machine.
 ### Prerequisites
 
 * One of the libraries we use is [Open3D](http://open3d.org), which does not support Python 3.7. We recommend running the code using a Python Enviroment.
-* For Mac users, the SDK of the [Intel® RealSense](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python) (the RGBD camera which we use is not available, so you have to build the files from source and add it to the 'pyrealsenseformac' folder.
+* For Mac users, the SDK of the [Intel® RealSense](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python) (the RGBD camera which we use) is not available, so you have to build the lib files from source and add them to the 'pyrealsenseformac' folder.
 
 
 
