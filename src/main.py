@@ -1,7 +1,8 @@
 import sys
 
 from PyQt5.QtWidgets import QWidget, QToolTip, QPushButton, QApplication, QMessageBox, QVBoxLayout, \
-                            QMainWindow, QApplication, QHBoxLayout, QGridLayout
+                            QMainWindow, QApplication, QHBoxLayout, QGridLayout, QFrame, QAbstractButton, QLabel, \
+                            QComboBox
 from PyQt5.QtGui import QFont, QImage, QPainter, QIcon, QPixmap
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread, QCoreApplication, Qt, QObject, QFile, QTextStream, QSize
 
@@ -24,7 +25,7 @@ import numpy as np
 import argparse
 from enum import IntEnum
 import os
-print(os.listdir())
+# print(os.listdir())
 import breeze_resources
 
 
@@ -43,6 +44,39 @@ class Preset(IntEnum):
     MediumDensity = 5
 
 
+class PicButton(QAbstractButton):
+    def __init__(self, pixmap, pixmap_hover, pixmap_pressed, parent=None):
+        super(PicButton, self).__init__(parent)
+        self.pixmap = pixmap
+        self.pixmap_hover = pixmap_hover
+        self.pixmap_pressed = pixmap_pressed
+        self.setDown(False)
+
+        self.pressed.connect(self.update)
+        self.released.connect(self.update)
+
+    def paintEvent(self, event):
+        pix = self.pixmap_hover if self.underMouse() else self.pixmap
+
+        if self.isDown():
+            temp = self.pixmap
+            self.pixmap = self.pixmap_pressed
+
+            pix = self.pixmap_pressed
+            # self.pixmap_pressed = temp
+
+        painter = QPainter(self)
+        painter.drawPixmap(event.rect(), pix)
+
+    def enterEvent(self, event):
+        self.update()
+
+    def leaveEvent(self, event):
+        self.update()
+
+    def sizeHint(self):
+        return QSize(200, 200)
+
 class View(QWidget):
 
     sgnStop = pyqtSignal()
@@ -50,6 +84,7 @@ class View(QWidget):
     def __init__(self):
         super().__init__()
         self._thread = None
+
         self.initUI()
 
     def initUI(self):
@@ -58,10 +93,7 @@ class View(QWidget):
         layout = QGridLayout(central_widget)
         layout.setSpacing(10)
 
-
-
         # self.setCentralWidget(central_widget)
-
 
         self._thread = None
         if self._thread == None:
@@ -76,6 +108,11 @@ class View(QWidget):
         self.sgnStop.connect(self.vid.stopVideo)
 
 
+        # frame = QFrame()
+        # frame.resize(300,300)
+        # frame.setFrameStyle(QFrame.Panel | QFrame.Raised)
+        # frame.setStyleSheet("background-color: rgb(255, 255, 255)")
+
 
         # dummy button
         dummy_button = QPushButton('dummy')
@@ -86,34 +123,56 @@ class View(QWidget):
 
         # Button to start the videocapture:
         # start_button = QPushButton('Start')
-        start_button = QPushButton()
+        # start_button = QPushButton()
         # start_button.setIcon(QIcon(QPixmap("play.svg")))
-        start_button.setIcon(QIcon('play.png'))
-        start_button.setIconSize(QSize(24, 24))
+        start_button = PicButton(QPixmap("play.png"), QPixmap("play.png"), QPixmap("play.png"))
+        # start_button.setIcon(QIcon('play.png'))
+        # start_button.setIconSize(QSize(24, 24))
         start_button.clicked.connect(self.vid.startVideo)
         start_button.setFixedWidth(50)
-        start_button.setFixedHeight(40)
+        start_button.setFixedHeight(50)
 
 
-        stop_button = QPushButton('Stop')
+        # stop_button = QPushButton('Stop')
+        stop_button = PicButton(QPixmap("rec.png"), QPixmap("rec.png"), QPixmap("rec.png"))
         stop_button.clicked.connect(self.disable)
-        stop_button.setFixedWidth(50)
-        stop_button.setFixedHeight(40)
+        stop_button.setFixedWidth(45)
+        stop_button.setFixedHeight(45)
 
         # void QGridLayout::addWidget(QWidget * widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Qt::Alignment alignment = 0)
 
         # layout.setContentsMargins(left, top, right, bottom)
         layout.setContentsMargins(100, 100, 100, 100)
-        image_viewer.setFixedWidth(700)
-        image_viewer.setFixedHeight(260)
+        image_viewer.setFixedWidth(720)
+        image_viewer.setFixedHeight(290)
+
 
         hbox_image = QHBoxLayout()
         hbox_image.addWidget(image_viewer)
         layout.addLayout(hbox_image, 0, 0, 1, 1, Qt.AlignLeft)
 
-        hbox_dummy = QHBoxLayout()
-        hbox_dummy.addWidget(dummy_button)
-        layout.addLayout(hbox_dummy, 0, 1, 1, 1, Qt.AlignLeft)
+        # label = QLabel(self)
+        # label.setStyleSheet("background-color: white; inset grey; min-height: 200px;")
+        # label.setFrameShape(QFrame.Panel)
+        # label.setFrameShadow(QFrame.Sunken)
+        # label.setLineWidth(3)
+        # label.setFixedWidth(100)
+        # label.setFixedHeight(200)
+
+
+        frame_rate = QLabel("Select frame rate", self)
+        comboBox = QComboBox(self)
+        comboBox.addItem("6")
+        comboBox.addItem("15")
+        comboBox.addItem("30")
+        comboBox.setCurrentIndex(1)
+        comboBox.activated[str].connect(self.style_choice)
+
+
+        hbox_dummy = QVBoxLayout()
+        hbox_dummy.addWidget(frame_rate)
+        hbox_dummy.addWidget(comboBox)
+        layout.addLayout(hbox_dummy, 0, 1, 1, 1, Qt.AlignCenter)
 
         hbox_start_buttons = QHBoxLayout()
         hbox_start_buttons.addWidget(start_button)
@@ -125,43 +184,101 @@ class View(QWidget):
         layout.setVerticalSpacing(100)
 
         # 3d reconstruction
-        reconstruct_btn = QPushButton('Reconstruct', self)
+        reconstruct_btn = QPushButton()
         reconstruct_btn.clicked.connect(self.Reconstruct)
+        reconstruct_btn.setIcon(QIcon('construct.png'))
+        reconstruct_btn.setIconSize(QSize(70, 70))
         # reconstruct_btn.resize(reconstruct_btn.sizeHint())
         reconstruct_btn.setFixedWidth(100)
         reconstruct_btn.setFixedHeight(90)
         # layout.addWidget(reconstruct_btn, 4, 0)
+        reconstruct_label = QLabel("  Reconstruct", self)
+
+        # View pointclouds
+        view_btn = QPushButton()
+        view_btn.clicked.connect(self.Augment)
+        # show_btn.resize(reconstruct_btn.sizeHint())
+        view_btn.setIcon(QIcon('house.png'))
+        view_btn.setIconSize(QSize(50, 50))
+        view_btn.setFixedWidth(100)
+        view_btn.setFixedHeight(90)
+        view_label = QLabel("         View", self)
+
+
+        # Segment
+        segment_btn = QPushButton()
+        segment_btn.clicked.connect(self.Augment)
+        # compare_btn.resize(reconstruct_btn.sizeHint())
+        segment_btn.setIcon(QIcon('seg3.png'))
+        segment_btn.setIconSize(QSize(80, 80))
+        segment_btn.setFixedWidth(100)
+        segment_btn.setFixedHeight(90)
+        segmentation_label = QLabel("     Segment", self)
+
+
+        # View pointclouds
+        show_btn = QPushButton()
+        show_btn.clicked.connect(self.Augment)
+        # show_btn.resize(reconstruct_btn.sizeHint())
+        show_btn.setIcon(QIcon('view1.png'))
+        show_btn.setIconSize(QSize(50, 50))
+        show_btn.setFixedWidth(100)
+        show_btn.setFixedHeight(90)
+        show_label = QLabel("         Show", self)
 
         # Augmentation
-        augment_btn = QPushButton('Augment', self)
+        augment_btn = QPushButton()
         augment_btn.clicked.connect(self.Augment)
-        augment_btn.resize(reconstruct_btn.sizeHint())
+        # augment_btn.resize(reconstruct_btn.sizeHint())
+        augment_btn.setIcon(QIcon('magic.png'))
+        augment_btn.setIconSize(QSize(70, 70))
         augment_btn.setFixedWidth(100)
         augment_btn.setFixedHeight(90)
         # layout.addWidget(augment_btn, 4, 2)
+        augmentation_label = QLabel("        Magic", self)
 
-        # Compare
-        compare_btn = QPushButton('Compare', self)
-        compare_btn.clicked.connect(self.Augment)
-        compare_btn.resize(reconstruct_btn.sizeHint())
-        compare_btn.setFixedWidth(100)
-        compare_btn.setFixedHeight(90)
 
-        # Show
-        show_btn = QPushButton('Show', self)
-        show_btn.clicked.connect(self.Augment)
-        show_btn.resize(reconstruct_btn.sizeHint())
-        show_btn.setFixedWidth(100)
-        show_btn.setFixedHeight(90)
 
         hbox_buttons = QHBoxLayout()
-        hbox_buttons.addWidget(reconstruct_btn)
-        hbox_buttons.addWidget(compare_btn)
-        hbox_buttons.addWidget(show_btn)
+        vbox_rec = QVBoxLayout()
+        vbox_rec.addWidget(reconstruct_btn)
+        vbox_rec.addWidget(reconstruct_label)
+        hbox_buttons.addLayout(vbox_rec)
 
-        # hbox_buttons.addStretch()
-        hbox_buttons.addWidget(augment_btn)
+        vbox_view = QVBoxLayout()
+        vbox_view.addWidget(view_btn)
+        vbox_view.addWidget(view_label)
+        # vbox_aug.setAlignment(Qt.AlignHCenter)
+        hbox_buttons.addLayout(vbox_view)
+
+        vbox_comp = QVBoxLayout()
+        vbox_comp.addWidget(segment_btn)
+        vbox_comp.addWidget(segmentation_label)
+        hbox_buttons.addLayout(vbox_comp)
+
+        vbox_show = QVBoxLayout()
+        vbox_show.addWidget(show_btn)
+        vbox_show.addWidget(show_label)
+        hbox_buttons.addLayout(vbox_show)
+
+        vbox_aug = QVBoxLayout()
+        vbox_aug.addWidget(augment_btn)
+        vbox_aug.addWidget(augmentation_label)
+        # vbox_aug.setAlignment(Qt.AlignHCenter)
+        hbox_buttons.addLayout(vbox_aug)
+
+
+        # hbox_buttons.addWidget(compare_btn)
+        # hbox_buttons.addWidget(show_btn)
+        # hbox_buttons.addWidget(augment_btn)
         layout.addLayout(hbox_buttons, 3, 0, 1, 2)
+
+        # hbox_buttons1 = QHBoxLayout()
+        # hbox_buttons1.addWidget(reconstruct_label)
+        # hbox_buttons1.addWidget(reconstruct_label)
+        # hbox_buttons1.addWidget(reconstruct_label)
+        # hbox_buttons1.addWidget(reconstruct_label)
+        # layout.addLayout(hbox_buttons1, 4, 0)
 
         # hbox1 = QHBoxLayout()
         # vlayout.addStretch(1)
@@ -198,6 +315,11 @@ class View(QWidget):
         self.setGeometry(0, 0, 1000, 650)
         self.setWindowTitle('App')
         self.show()
+
+    def style_choice(self, text):
+        # self.style_choice.setText(text)
+        self.vid.frame_rate = int(text)
+        print(int(self.vid.frame_rate))
 
 
 
@@ -286,6 +408,7 @@ class ShowVideo(QObject):
 
     def __init__(self, parent=None):
         super(ShowVideo, self).__init__(parent)
+        self.frame_rate = 15
         print("ShowVideo")
 
     @pyqtSlot()
@@ -314,8 +437,10 @@ class ShowVideo(QObject):
         #  different resolutions of color and depth streams
         config = rs.config()
 
-        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
-        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 15)
+        print("frame_rate")
+        print(self.frame_rate)
+        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, self.frame_rate)
+        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, self.frame_rate)
 
         # Start streaming
         profile = pipeline.start(config)
@@ -391,7 +516,7 @@ class ShowVideo(QObject):
                                         width,
                                         height,
                                         color_swapped_image.strides[0],
-                                        QImage.Format_RGB888).scaledToWidth(700)
+                                        QImage.Format_RGB888).scaledToWidth(720)
 
 
                 # cv2.namedWindow('Recorder Realsense', cv2.WINDOW_AUTOSIZE)
