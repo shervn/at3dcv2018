@@ -53,7 +53,7 @@ pointnet_root = '/usr/stud/tranthi/segmentation/03_repos/pointnet'
 # save ply to npy
 directory = pointnet_root + '/data/custom_data'
 #for file in os.listdir(directory):
-for file in ['bookcase_30.ply', 'desk_chair_15.ply', 'desk_chair_30.ply']:
+for file in ['integrated.ply']:
     if file.endswith('.ply'):
         ply_to_npy(directory + '/' + file, directory + '/' + file.split('.')[0] + '.npy')
 

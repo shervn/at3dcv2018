@@ -19,6 +19,7 @@ show_custom = 0
 assert(show_color + show_label + show_custom <= 1)
 
 POINTNET_ROOT = "/Users/tamtran/Desktop/TUM/1819Winter/Praktikum_ATin3DCV/project/03_repos/pointnet"
+#POINTNET_ROOT = "/usr/stud/tranthi/segmentation/03_repos/pointnet"
 IN_FILE = ''
 
 if file_type == 'h5':
@@ -38,7 +39,7 @@ if file_type == 'h5':
 
 if file_type == 'txt':
     #IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump_filesEven_tmp/Area_6_conferenceRoom_1_pred.txt"
-    IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump_filesEvenOdd_tmp/desk_chair_30_pred.txt"
+    IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump_filesEven_voxel2/integrated_pred.txt"
     #IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump/Area_6_copyRoom_1_pred.txt"
 
     f = open(IN_FILE, 'r') # 6 channels
