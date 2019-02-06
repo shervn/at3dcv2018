@@ -15,7 +15,7 @@ These instructions will help you running the code on your local machine.
 
 ### Running
 
-To run the whole pipline with UI, go to the root directory and run main.py.
+To run the whole pipline with UI, go to the source directory and run main.py.
 ```
 python main.py
 ```

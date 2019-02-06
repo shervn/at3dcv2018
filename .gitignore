@@ -1,4 +1,8 @@
 /Samples
 /pyrealsenseformac
-/Reconstruction
-/.vscode
+.vscode
+src/.vscode
+src/.idea
+src/Reconstruction/ReconstructionSystem/dataset/
+src/__pycache__
+src/*/__pycache__
