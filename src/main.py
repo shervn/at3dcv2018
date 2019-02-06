@@ -7,18 +7,13 @@ from PyQt5.QtGui import QFont, QImage, QPainter, QIcon, QPixmap
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread, QCoreApplication, Qt, QObject, QFile, QTextStream, QSize
 
 from open3d import *
-# sys.path.append('src')
 from Reconstruction.reconstruction import Reconstructor
 from Segmentation.segmentation import Segmenter
 from Augmentation.augmentation import Augmentor
 from Augmentation.augmentation_ui import AugmentationUI
 
-from paths import camera_config_path, reconstruction_system
+from paths import *
 from Augmentation.config import *
-# print('rec')
-# print(reconstruction_system)
-
-# from paths import sensors
 
 import json
 from os import makedirs
@@ -27,7 +22,6 @@ import shutil
 from pyqtgraph import ImageView
 import cv2
 
-from paths import macpyrealsense2
 sys.path.append(macpyrealsense2)
 import pyrealsense2 as rs
 
@@ -35,7 +29,6 @@ import numpy as np
 import argparse
 from enum import IntEnum
 import os
-# print(os.listdir())
 import layout.breeze_resources
 
 

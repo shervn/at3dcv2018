@@ -12,6 +12,7 @@ from utils.icp_helper import get_registeration
 from utils.vis_helper import *
 
 from config import *
+from paths import *
 
 class Augmentor:
 
