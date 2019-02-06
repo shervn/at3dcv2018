@@ -176,7 +176,7 @@ class View(QWidget):
 
         # View pointclouds
         view_btn = QPushButton()
-        view_btn.clicked.connect(self.Augment)
+        view_btn.clicked.connect(self._viewReconstruction)
         # show_btn.resize(reconstruct_btn.sizeHint())
         view_btn.setIcon(QIcon(join(images_path + '/view.png')))
         view_btn.setIconSize(QSize(50, 50))
@@ -250,6 +250,9 @@ class View(QWidget):
         self.setGeometry(0, 0, 1000, 650)
         self.setWindowTitle('App')
         self.show()
+
+    def _viewReconstruction(self):
+        draw_geometries([self.r.reconstructed_pointcloud])
 
     def style_choice(self, text):
         self.vid.frame_rate = int(text)
