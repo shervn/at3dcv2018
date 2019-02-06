@@ -23,3 +23,7 @@ macpyrealsense2 = rel_path_before_src + '/pyrealsenseformac/'
 
 furnitures_path = rel_path_before_src + '/Data/Furnitures/'
 logo_path = rel_path_before_src + '/logo.png'
+
+layout_path = rel_path_before_src + '/Layout'
+images_path = rel_path_before_src + '/Images'
+

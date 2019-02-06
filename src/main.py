@@ -28,8 +28,11 @@ import pyrealsense2 as rs
 import numpy as np
 import argparse
 from enum import IntEnum
-import os
-import layout.breeze_resources
+
+sys.path.append(images_path)
+sys.path.append(layout_path)
+import breeze_resources
+
 
 
 try:
@@ -128,7 +131,7 @@ class View(QWidget):
         # start_button = QPushButton('Start')
         # start_button = QPushButton()
         # start_button.setIcon(QIcon(QPixmap("play.svg")))
-        start_button = PicButton(QPixmap("play.png"), QPixmap("play.png"), QPixmap("play.png"))
+        start_button = PicButton(QPixmap(join(images_path + "/play.png")), QPixmap(join(images_path + "/play.png")), QPixmap(join(images_path + "/play.png")))
         # start_button.setIcon(QIcon('play.png'))
         # start_button.setIconSize(QSize(24, 24))
         start_button.clicked.connect(self.vid.startVideo)
@@ -137,7 +140,8 @@ class View(QWidget):
 
 
         # stop_button = QPushButton('Stop')
-        stop_button = PicButton(QPixmap("rec.png"), QPixmap("rec.png"), QPixmap("rec.png"))
+        stop_button = PicButton(QPixmap(join(images_path + "/rec.png")), QPixmap(join(images_path + "/rec.png")), QPixmap(join(images_path + "/rec.png")))
+
         stop_button.clicked.connect(self.disable)
         stop_button.setFixedWidth(45)
         stop_button.setFixedHeight(45)
@@ -189,7 +193,8 @@ class View(QWidget):
         # 3d reconstruction
         reconstruct_btn = QPushButton()
         reconstruct_btn.clicked.connect(self.Reconstruct)
-        reconstruct_btn.setIcon(QIcon('images/construct.png'))
+
+        reconstruct_btn.setIcon(QIcon(join(images_path + '/construct.png')))
         reconstruct_btn.setIconSize(QSize(70, 70))
         # reconstruct_btn.resize(reconstruct_btn.sizeHint())
         reconstruct_btn.setFixedWidth(100)
@@ -201,7 +206,7 @@ class View(QWidget):
         view_btn = QPushButton()
         view_btn.clicked.connect(self.Augment)
         # show_btn.resize(reconstruct_btn.sizeHint())
-        view_btn.setIcon(QIcon('images/house.png'))
+        view_btn.setIcon(QIcon(join(images_path + '/view.png')))
         view_btn.setIconSize(QSize(50, 50))
         view_btn.setFixedWidth(100)
         view_btn.setFixedHeight(90)
@@ -212,7 +217,7 @@ class View(QWidget):
         segment_btn = QPushButton()
         segment_btn.clicked.connect(self.Augment)
         # compare_btn.resize(reconstruct_btn.sizeHint())
-        segment_btn.setIcon(QIcon('images/seg3.png'))
+        segment_btn.setIcon(QIcon(join(images_path + '/seg3.png')))
         segment_btn.setIconSize(QSize(80, 80))
         segment_btn.setFixedWidth(100)
         segment_btn.setFixedHeight(90)
@@ -223,7 +228,7 @@ class View(QWidget):
         show_btn = QPushButton()
         show_btn.clicked.connect(self.Augment)
         # show_btn.resize(reconstruct_btn.sizeHint())
-        show_btn.setIcon(QIcon('images/view1.png'))
+        show_btn.setIcon(QIcon(join(images_path + '/view1.png')))
         show_btn.setIconSize(QSize(50, 50))
         show_btn.setFixedWidth(100)
         show_btn.setFixedHeight(90)
@@ -233,7 +238,7 @@ class View(QWidget):
         augment_btn = QPushButton()
         augment_btn.clicked.connect(self.Augment)
         # augment_btn.resize(reconstruct_btn.sizeHint())
-        augment_btn.setIcon(QIcon('images/magic.png'))
+        augment_btn.setIcon(QIcon(join(images_path + '/magic.png')))
         augment_btn.setIconSize(QSize(70, 70))
         augment_btn.setFixedWidth(100)
         augment_btn.setFixedHeight(90)
