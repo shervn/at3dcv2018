@@ -30,7 +30,6 @@ class Augmentor:
             show_pcd([pcd])
 
     def get_object_with_hashed_color(self, hashed_color):
-
         return select_down_sample(self.pointcloud, self.objects_dictionary_by_color[hashed_color])
 
     def remove_object_with_index(self, hashed_color):
@@ -38,17 +37,19 @@ class Augmentor:
         l = range(0, len(self.pointcloud.points))
         return select_down_sample(self.pointcloud, [x for x in l if x not in self.objects_dictionary_by_color[hashed_color]])
     
-    def change_object(self, object_to_change):
+    def change_object(self, object_to_change, source_pointcloud):
 
         object_to_change_hash = self.__get_hashed_color_of_object_from_name(object_to_change)
 
         scene_without_old_object = self.remove_object_with_index(object_to_change_hash)
         old_object = self.get_object_with_hashed_color(object_to_change_hash)
 
-        source = self.__get_new_object_from_dataset(object_to_change)
+        # source = self.__get_new_object_from_dataset(object_to_change)
+        source = source_pointcloud
 
         transformed_new_object = self.__automated_registraion(source, old_object)
 
+        # show_pcd([transformed_new_object, old_object])
         return transformed_new_object, scene_without_old_object
 
     def __get_hashed_color_of_object_from_name(self, object_name):
@@ -119,29 +120,18 @@ class Augmentor:
         hashed_color = str(color[0]) + '-' + str(color[1]) + '-' + str(color[2])
         return hashed_color
 
-    def __pick_points(self, pcd):
-        #only needed when using __manul_registration
+    # def __pick_points(self, pcd):
+    #     #only needed when using __manul_registration
 
-        print("")
-        print("1) Please pick at least three correspondences using [shift + left click]")
-        print("   Press [shift + right click] to undo point picking")
-        print("2) Afther picking points, press q for close the window")
+    #     print("")
+    #     print("1) Please pick at least three correspondences using [shift + left click]")
+    #     print("   Press [shift + right click] to undo point picking")
+    #     print("2) Afther picking points, press q for close the window")
 
-        vis = VisualizerWithEditing()
-        vis.create_window()
-        vis.add_geometry(pcd)
-        vis.run()
-        vis.destroy_window()
+    #     vis = VisualizerWithEditing()
+    #     vis.create_window()
+    #     vis.add_geometry(pcd)
+    #     vis.run()
+    #     vis.destroy_window()
 
-        return vis.get_picked_points()
-
-
-if __name__ == "__main__":
-
-    r = read_point_cloud(reconstructed_scene)
-    l = read_point_cloud(segmented_reconstructed_scene)
-
-    t = Augmentor(r, l)
-
-    new_object, scene_without_old_object = t.change_object('bed')
-    show_pcd([new_object, scene_without_old_object])
+    #     return vis.get_picked_points()

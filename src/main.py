@@ -11,6 +11,7 @@ from open3d import *
 from Reconstruction.reconstruction import Reconstructor
 from Segmentation.segmentation import Segmenter
 from Augmentation.augmentation import Augmentor
+from Augmentation.augmentation_ui import AugmentationUI
 
 # from paths import camera_config_path, reconstruction_system
 # print('rec')
@@ -380,10 +381,15 @@ class View(QWidget):
         self.s = Segmenter(self.r.reconstructed_pointcloud)
 
     def Augment(self):
-        name = "/home/pti/Downloads/tum/at3dcv/project/pointclouds_for_fun/scene0000_00_vh_clean_2.labels.ply"
+        
+        name = 'Samples/scene0000_01_vh_clean_2.ply'
         dummy_pcl = read_point_cloud(name)
-        draw_geometries([dummy_pcl])
-        # self.t = Augmentor(self, dummy_pcl)
+
+        name_labels = 'Samples/scene0000_01_vh_clean_2.labels.ply'
+        dummy_pcl_labels = read_point_cloud(name_labels)
+        
+        t = Augmentor(dummy_pcl, dummy_pcl_labels)
+        self.augmentation_ui = AugmentationUI(t)
 
 
 
