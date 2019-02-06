@@ -130,10 +130,20 @@ class View(QWidget):
         image_viewer.setFixedWidth(720)
         image_viewer.setFixedHeight(290)
 
+        label = QLabel(self)
+        pixmap = QPixmap(logo_path)
+        pixmap = pixmap.scaled(pixmap.width() / 6, pixmap.height() / 6)
+        label.setPixmap(pixmap)
+
+        hbox_logo = QHBoxLayout()
+        hbox_logo.addWidget(label)
+        layout.addLayout(hbox_logo, 0, 0, 1, 1, Qt.AlignLeft)
 
         hbox_image = QHBoxLayout()
+        # hbox_image.addWidget(label)
         hbox_image.addWidget(image_viewer)
-        layout.addLayout(hbox_image, 0, 0, 1, 1, Qt.AlignLeft)
+
+        layout.addLayout(hbox_image, 0, 1, 1, 1, Qt.AlignLeft)
 
 
         frame_rate = QLabel("Select frame rate", self)
@@ -148,12 +158,12 @@ class View(QWidget):
         hbox_dummy = QVBoxLayout()
         hbox_dummy.addWidget(frame_rate)
         hbox_dummy.addWidget(comboBox)
-        layout.addLayout(hbox_dummy, 0, 1, 1, 1, Qt.AlignCenter)
+        layout.addLayout(hbox_dummy, 0, 2, 1, 1, Qt.AlignCenter)
 
         hbox_start_buttons = QHBoxLayout()
         hbox_start_buttons.addWidget(start_button)
         hbox_start_buttons.addWidget(stop_button)
-        layout.addLayout(hbox_start_buttons, 0, 0, 1, 1, Qt.AlignBottom| Qt.AlignCenter)
+        layout.addLayout(hbox_start_buttons, 0, 1, 1, 1, Qt.AlignBottom| Qt.AlignCenter)
 
         layout.setVerticalSpacing(100)
 
@@ -235,10 +245,7 @@ class View(QWidget):
         hbox_buttons.addLayout(vbox_aug)
 
 
-        layout.addLayout(hbox_buttons, 3, 0, 1, 2)
-
-
-
+        layout.addLayout(hbox_buttons, 3, 0, 1, 5)
 
 
         self.setLayout(layout)
