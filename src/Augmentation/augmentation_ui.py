@@ -65,7 +65,7 @@ class AugmentationUI(QtWidgets.QWidget):
 
         self.setLayout(hbox)
         self.leftlist.currentRowChanged.connect(self.display)
-        self.setGeometry(300, 50, 10,10)
+        self.setGeometry(150, 50, 1100, 400)
         self.setWindowTitle('AU.')
 
         self.show()
@@ -112,9 +112,9 @@ class AugmentationUI(QtWidgets.QWidget):
 
     def RemoveObjectWindow(self):
 
-        objectChoice = QtGui.QLabel('Which Object You Want to Remove?', self.stack2)
+        objectChoice = QtWidgets.QLabel('Which Object You Want to Remove?', self.stack2)
 
-        comboBox = QtGui.QComboBox(self.stack2)
+        comboBox = QtWidgets.QComboBox(self.stack2)
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
@@ -127,16 +127,16 @@ class AugmentationUI(QtWidgets.QWidget):
         layout = QGridLayout()
         
         layout.setColumnStretch(5, 5)
-        layout.addWidget(objectChoice,0,0)
-        layout.addWidget(comboBox,0,1)
+        layout.addWidget(objectChoice, 0, 0)
+        layout.addWidget(comboBox, 0, 1)
 
         self.horizontalGroupBox.setLayout(layout)
 
     def ShowOneObjectWindow(self):
         
-        objectChoice = QtGui.QLabel('Which Object You Want to See?', self.stack3)
+        objectChoice = QtWidgets.QLabel('Which Object You Want to See?', self.stack3)
 
-        comboBox = QtGui.QComboBox(self.stack3)
+        comboBox = QtWidgets.QComboBox(self.stack3)
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
@@ -147,16 +147,16 @@ class AugmentationUI(QtWidgets.QWidget):
         layout = QGridLayout()
         
         layout.setColumnStretch(5, 5)
-        layout.addWidget(objectChoice,0,0)
-        layout.addWidget(comboBox,0,1)
+        layout.addWidget(objectChoice, 0, 0)
+        layout.addWidget(comboBox, 0, 1)
 
         self.horizontalGroupBox.setLayout(layout)
 
     def ChangeObjectWindow(self):
 
-        objectChoice = QtGui.QLabel('Which Object You Want to Change?', self.stack4)
+        objectChoice = QtWidgets.QLabel('Which Object You Want to Change?', self.stack4)
 
-        comboBox = QtGui.QComboBox(self.stack4)
+        comboBox = QtWidgets.QComboBox(self.stack4)
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
@@ -164,8 +164,8 @@ class AugmentationUI(QtWidgets.QWidget):
         comboBox.activated[str].connect(self.__select_target_object)
 
 
-        objectChoiceII = QtGui.QLabel('Which New Object You Want to Choose?', self.stack4)
-        comboBoxII = QtGui.QComboBox(self.stack4)
+        objectChoiceII = QtWidgets.QLabel('Which New Object You Want to Choose?', self.stack4)
+        comboBoxII = QtWidgets.QComboBox(self.stack4)
         for key in self.furnitures.keys():
             i = 0
             for item in self.furnitures[key]:
@@ -183,12 +183,12 @@ class AugmentationUI(QtWidgets.QWidget):
         
         layout = QGridLayout()
         layout.setColumnStretch(5, 5)
-        layout.addWidget(objectChoice,0,0)
-        layout.addWidget(comboBox,0,1)
-        layout.addWidget(objectChoiceII,2,0)
-        layout.addWidget(comboBoxII, 2,1)
+        layout.addWidget(objectChoice, 0, 0)
+        layout.addWidget(comboBox, 0, 1)
+        layout.addWidget(objectChoiceII, 2, 0)
+        layout.addWidget(comboBoxII, 2, 1)
         
-        layout.addWidget(ChangeButton, 2,2)
+        layout.addWidget(ChangeButton, 2, 2)
 
         self.horizontalGroupBox.setLayout(layout)
 

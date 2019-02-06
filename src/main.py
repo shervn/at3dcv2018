@@ -275,8 +275,6 @@ class View(QWidget):
         self.augmentation_ui = AugmentationUI(t)
 
 
-
-
 class ImageViewer(QWidget):
     def __init__(self, parent=None):
         super(ImageViewer, self).__init__(parent)
