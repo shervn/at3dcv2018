@@ -49,7 +49,7 @@ class Augmentor:
 
         transformed_new_object = self.__automated_registraion(source, old_object)
 
-        show_pcd([transformed_new_object, old_object])
+        # show_pcd([transformed_new_object, old_object])
         return transformed_new_object, scene_without_old_object
 
     def __get_hashed_color_of_object_from_name(self, object_name):

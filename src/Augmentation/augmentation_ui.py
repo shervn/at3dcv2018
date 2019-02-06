@@ -1,8 +1,11 @@
 import sys, glob, os
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout, QGridLayout
+from PyQt5.QtWidgets import QApplication, QStackedWidget, QWidget, QListWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel
+from PyQt5.QtGui import QIcon, QPixmap
 
 from collections import defaultdict
 
@@ -24,51 +27,55 @@ class AugmentationUI(QtWidgets.QWidget):
 
         self.augmentor = augmentor
         self.furnitures = get_all_objects()
-        self.target_object = ''
+        self.source_object = ''
         self.source_object = ''
 
-        self.setObjectName('AU')
-
-        self.resize(640, 480)
-
-        self.QtStack = QtWidgets.QStackedLayout()
-
-        self.stack0 = QtWidgets.QWidget()
+        self.leftlist = QListWidget()
+        self.leftlist.insertItem(0, 'Show Point Cloud')
+        self.leftlist.insertItem(1, 'Remove Object' )
+        self.leftlist.insertItem(2, 'Show One Object' )
+        self.leftlist.insertItem(3, 'Change Object' )
+		
         self.stack1 = QtWidgets.QWidget()
         self.stack2 = QtWidgets.QWidget()
         self.stack3 = QtWidgets.QWidget()
+        self.stack4 = QtWidgets.QWidget()
 
-        self.MainWindow()
-        self.ChangeObjectWindow()
+        self.ShowPointCloudWindow()
         self.RemoveObjectWindow()
         self.ShowOneObjectWindow()
+        self.ChangeObjectWindow()
+		
+        self.Stack = QStackedWidget(self)
+        self.Stack.addWidget(self.stack1)
+        self.Stack.addWidget(self.stack2)
+        self.Stack.addWidget(self.stack3)
+        self.Stack.addWidget(self.stack4)
 
-        self.QtStack.addWidget(self.stack0)
-        self.QtStack.addWidget(self.stack1)
-        self.QtStack.addWidget(self.stack2)
-        self.QtStack.addWidget(self.stack3)
-
-        self.ChangeObjectButton.clicked.connect(self.OpenChangeObjectWindow)
-        self.RemoveObjectButton.clicked.connect(self.OpenRemoveObjectWindow)
-        self.ShowOneObjectButton.clicked.connect(self.OpenShowOneObjectWindow)
-
-        self.ShowRawButton.clicked.connect(self.show_raw_point_cloud)
-        self.ShowLabledButton.clicked.connect(self.show_labled_point_cloud)
-        self.ShowWithTrajectoryButton.clicked.connect(self.show_with_trajectory)
+        label = QLabel(self)
+        pixmap = QPixmap('/Users/shervindehghani/Desktop/hello/at3dcv2018/logo.png')
+        pixmap = pixmap.scaled(pixmap.width()/5, pixmap.height()/5)
+        label.setPixmap(pixmap)
+		
+        hbox = QHBoxLayout(self)
+        hbox.addWidget(label)
+        hbox.addWidget(self.leftlist)
+        hbox.addWidget(self.Stack)
 
 
-    def OpenRemoveObjectWindow(self):
-        self.QtStack.setCurrentIndex(1)
-    def OpenChangeObjectWindow(self):
-        self.QtStack.setCurrentIndex(2)
-    def OpenShowOneObjectWindow(self):
-        self.QtStack.setCurrentIndex(3)
-    def OpenMainWindow(self):
-        self.QtStack.setCurrentIndex(0)
+        self.setLayout(hbox)
+        self.leftlist.currentRowChanged.connect(self.display)
+        self.setGeometry(300, 50, 10,10)
+        self.setWindowTitle('AU.')
 
-    
+        self.show()
+
+
+    def display(self,i):
+        self.Stack.setCurrentIndex(i)
+
     def show_with_trajectory(self):
-        show_pcd([self.augmentor.pointcloud])
+        custom_draw_geometry_with_camera_trajectory(self.augmentor.pointcloud)
     def show_labled_point_cloud(self):
         show_pcd([self.augmentor.labeld_pointcloud])
     def show_raw_point_cloud(self):
@@ -84,45 +91,37 @@ class AugmentationUI(QtWidgets.QWidget):
         t = self.augmentor.remove_object_with_index(color)
         show_pcd([t])
 
-    def MainWindow(self):
+    def ShowPointCloudWindow(self):
 
-        self.ShowRawButton = QtWidgets.QPushButton(self.stack0)
-        self.ShowRawButton.setText('Show Point Cloud')
-        self.ShowRawButton.setGeometry(QtCore.QRect(100, 100, 200, 30))
+        RawButton = QtWidgets.QPushButton(self.stack1)
+        RawButton.setText('Show Raw')
+        RawButton.clicked.connect(self.show_raw_point_cloud)
+
+        LabeldButton = QtWidgets.QPushButton(self.stack1)
+        LabeldButton.setText('Show Labeld')
+        LabeldButton.clicked.connect(self.show_labled_point_cloud)
+
+        self.horizontalGroupBox = QGroupBox('', self.stack1)
         
-        self.ShowLabledButton = QtWidgets.QPushButton(self.stack0)
-        self.ShowLabledButton.setText('Show Labled Point Cloud')
-        self.ShowLabledButton.setGeometry(QtCore.QRect(100, 150, 200, 30))
+        layout = QGridLayout()
+        layout.setColumnStretch(5, 5)
+        layout.addWidget(RawButton,0,1)
+        layout.addWidget(LabeldButton, 2,1)
 
-        self.ShowWithTrajectoryButton = QtWidgets.QPushButton(self.stack0)
-        self.ShowWithTrajectoryButton.setText('Show With Trajectory')
-        self.ShowWithTrajectoryButton.setGeometry(QtCore.QRect(100, 200, 200, 30))
-        
-        self.RemoveObjectButton = QtWidgets.QPushButton(self.stack0)
-        self.RemoveObjectButton.setText('Remove Object')
-        self.RemoveObjectButton.setGeometry(QtCore.QRect(100, 250, 200, 30))
-
-        self.ShowOneObjectButton = QtWidgets.QPushButton(self.stack0)
-        self.ShowOneObjectButton.setText('Show One Object')
-        self.ShowOneObjectButton.setGeometry(QtCore.QRect(100, 300, 200, 30))
-
-        self.ChangeObjectButton = QtWidgets.QPushButton(self.stack0)
-        self.ChangeObjectButton.setText('Change Object')
-        self.ChangeObjectButton.setGeometry(QtCore.QRect(100, 350, 200, 30))
-
+        self.horizontalGroupBox.setLayout(layout)
 
     def RemoveObjectWindow(self):
 
-        objectChoice = QtGui.QLabel('Which Object You Want to Remove?', self.stack1)
+        objectChoice = QtGui.QLabel('Which Object You Want to Remove?', self.stack2)
 
-        comboBox = QtGui.QComboBox(self.stack1)
+        comboBox = QtGui.QComboBox(self.stack2)
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
 
         comboBox.activated[str].connect(self.remove_one_object)
 
-        self.horizontalGroupBox = QGroupBox('', self.stack1)
+        self.horizontalGroupBox = QGroupBox('', self.stack2)
         layout = QGridLayout()
         
         layout.setColumnStretch(5, 5)
@@ -130,8 +129,6 @@ class AugmentationUI(QtWidgets.QWidget):
         layout.addWidget(comboBox,0,1)
 
         self.horizontalGroupBox.setLayout(layout)
-
-        self.__add_back_button(self.stack1)
 
     def ShowOneObjectWindow(self):
         
@@ -153,20 +150,18 @@ class AugmentationUI(QtWidgets.QWidget):
 
         self.horizontalGroupBox.setLayout(layout)
 
-        self.__add_back_button(self.stack3)
-
     def ChangeObjectWindow(self):
 
-        objectChoice = QtGui.QLabel('Which Object You Want to Change?', self.stack2)
+        objectChoice = QtGui.QLabel('Which Object You Want to Change?', self.stack4)
 
-        comboBox = QtGui.QComboBox(self.stack2)
+        comboBox = QtGui.QComboBox(self.stack4)
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
         comboBox.activated[str].connect(self.__select_target_object)
 
-        objectChoiceII = QtGui.QLabel('Which New Object You Want to Choose?', self.stack2)
-        comboBoxII = QtGui.QComboBox(self.stack2)
+        objectChoiceII = QtGui.QLabel('Which New Object You Want to Choose?', self.stack4)
+        comboBoxII = QtGui.QComboBox(self.stack4)
         for key in self.furnitures.keys():
             i = 0
             for item in self.furnitures[key]:
@@ -175,24 +170,22 @@ class AugmentationUI(QtWidgets.QWidget):
 
         comboBoxII.activated[str].connect(self.__select_source_object)
 
-        ChangeButton = QtWidgets.QPushButton(self.stack2)
+        ChangeButton = QtWidgets.QPushButton(self.stack4)
         ChangeButton.setText('Change')
         ChangeButton.clicked.connect(self.__change_object)
         
-        self.horizontalGroupBox = QGroupBox('', self.stack2)
-        layout = QGridLayout()
+        self.horizontalGroupBox = QGroupBox('', self.stack4)
         
+        layout = QGridLayout()
         layout.setColumnStretch(5, 5)
         layout.addWidget(objectChoice,0,0)
         layout.addWidget(comboBox,0,1)
         layout.addWidget(objectChoiceII,2,0)
-        layout.addWidget(comboBoxII, 2,2)
+        layout.addWidget(comboBoxII, 2,1)
         
-        layout.addWidget(ChangeButton, 4,4)
+        layout.addWidget(ChangeButton, 2,2)
 
         self.horizontalGroupBox.setLayout(layout)
-
-        self.__add_back_button(self.stack2)
 
     def __select_target_object(self, name):
         self.target_object = name
@@ -209,11 +202,6 @@ class AugmentationUI(QtWidgets.QWidget):
         [a, b] = self.augmentor.change_object(target, source)
         show_pcd([a, b])
     
-    def __add_back_button(self, stack):
-        self.BackButton = QtWidgets.QPushButton(stack)
-        self.BackButton.setText('Back')
-        self.BackButton.setGeometry(QtCore.QRect(400, 400, 50, 30))
-        self.BackButton.clicked.connect(self.OpenMainWindow)
 
 def get_objects(name):
     os.chdir(furnitures_path + name)
