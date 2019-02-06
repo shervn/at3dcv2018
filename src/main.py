@@ -19,14 +19,12 @@ import json
 from os import makedirs
 from os.path import exists, join
 import shutil
-from pyqtgraph import ImageView
 import cv2
 
 sys.path.append(macpyrealsense2)
 import pyrealsense2 as rs
 
 import numpy as np
-import argparse
 from enum import IntEnum
 
 sys.path.append(images_path)
@@ -99,8 +97,6 @@ class View(QWidget):
         layout = QGridLayout(central_widget)
         layout.setSpacing(10)
 
-        # self.setCentralWidget(central_widget)
-
         self._thread = None
         if self._thread == None:
             self._thread = QThread()
@@ -113,27 +109,8 @@ class View(QWidget):
         self.vid.VideoSignal.connect(image_viewer.setImage)
         self.sgnStop.connect(self.vid.stopVideo)
 
-
-        # frame = QFrame()
-        # frame.resize(300,300)
-        # frame.setFrameStyle(QFrame.Panel | QFrame.Raised)
-        # frame.setStyleSheet("background-color: rgb(255, 255, 255)")
-
-
-        # dummy button
-        dummy_button = QPushButton('dummy')
-        dummy_button.clicked.connect(self.vid.startVideo)
-        dummy_button.setFixedWidth(100)
-        dummy_button.setFixedHeight(100)
-
-
         # Button to start the videocapture:
-        # start_button = QPushButton('Start')
-        # start_button = QPushButton()
-        # start_button.setIcon(QIcon(QPixmap("play.svg")))
         start_button = PicButton(QPixmap(join(images_path + "/play.png")), QPixmap(join(images_path + "/play.png")), QPixmap(join(images_path + "/play.png")))
-        # start_button.setIcon(QIcon('play.png'))
-        # start_button.setIconSize(QSize(24, 24))
         start_button.clicked.connect(self.vid.startVideo)
         start_button.setFixedWidth(50)
         start_button.setFixedHeight(50)
@@ -147,8 +124,8 @@ class View(QWidget):
         stop_button.setFixedHeight(45)
 
         # void QGridLayout::addWidget(QWidget * widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Qt::Alignment alignment = 0)
-
         # layout.setContentsMargins(left, top, right, bottom)
+
         layout.setContentsMargins(100, 100, 100, 100)
         image_viewer.setFixedWidth(720)
         image_viewer.setFixedHeight(290)
@@ -157,14 +134,6 @@ class View(QWidget):
         hbox_image = QHBoxLayout()
         hbox_image.addWidget(image_viewer)
         layout.addLayout(hbox_image, 0, 0, 1, 1, Qt.AlignLeft)
-
-        # label = QLabel(self)
-        # label.setStyleSheet("background-color: white; inset grey; min-height: 200px;")
-        # label.setFrameShape(QFrame.Panel)
-        # label.setFrameShadow(QFrame.Sunken)
-        # label.setLineWidth(3)
-        # label.setFixedWidth(100)
-        # label.setFixedHeight(200)
 
 
         frame_rate = QLabel("Select frame rate", self)
@@ -185,9 +154,7 @@ class View(QWidget):
         hbox_start_buttons.addWidget(start_button)
         hbox_start_buttons.addWidget(stop_button)
         layout.addLayout(hbox_start_buttons, 0, 0, 1, 1, Qt.AlignBottom| Qt.AlignCenter)
-        # layout.addLayout(hbox_start_buttons, 1, 0, 1, 1, Qt.AlignTop| Qt.AlignCenter)
 
-        # layout.setVerticalSpacing(30)
         layout.setVerticalSpacing(100)
 
         # 3d reconstruction
@@ -196,10 +163,8 @@ class View(QWidget):
 
         reconstruct_btn.setIcon(QIcon(join(images_path + '/construct.png')))
         reconstruct_btn.setIconSize(QSize(70, 70))
-        # reconstruct_btn.resize(reconstruct_btn.sizeHint())
         reconstruct_btn.setFixedWidth(100)
         reconstruct_btn.setFixedHeight(90)
-        # layout.addWidget(reconstruct_btn, 4, 0)
         reconstruct_label = QLabel("  Reconstruct", self)
 
         # View pointclouds
@@ -216,7 +181,6 @@ class View(QWidget):
         # Segment
         segment_btn = QPushButton()
         segment_btn.clicked.connect(self.Augment)
-        # compare_btn.resize(reconstruct_btn.sizeHint())
         segment_btn.setIcon(QIcon(join(images_path + '/seg3.png')))
         segment_btn.setIconSize(QSize(80, 80))
         segment_btn.setFixedWidth(100)
@@ -227,7 +191,6 @@ class View(QWidget):
         # View pointclouds
         show_btn = QPushButton()
         show_btn.clicked.connect(self.Augment)
-        # show_btn.resize(reconstruct_btn.sizeHint())
         show_btn.setIcon(QIcon(join(images_path + '/view1.png')))
         show_btn.setIconSize(QSize(50, 50))
         show_btn.setFixedWidth(100)
@@ -237,12 +200,10 @@ class View(QWidget):
         # Augmentation
         augment_btn = QPushButton()
         augment_btn.clicked.connect(self.Augment)
-        # augment_btn.resize(reconstruct_btn.sizeHint())
         augment_btn.setIcon(QIcon(join(images_path + '/magic.png')))
         augment_btn.setIconSize(QSize(70, 70))
         augment_btn.setFixedWidth(100)
         augment_btn.setFixedHeight(90)
-        # layout.addWidget(augment_btn, 4, 2)
         augmentation_label = QLabel("        Magic", self)
 
 
@@ -256,7 +217,6 @@ class View(QWidget):
         vbox_view = QVBoxLayout()
         vbox_view.addWidget(view_btn)
         vbox_view.addWidget(view_label)
-        # vbox_aug.setAlignment(Qt.AlignHCenter)
         hbox_buttons.addLayout(vbox_view)
 
         vbox_comp = QVBoxLayout()
@@ -272,49 +232,12 @@ class View(QWidget):
         vbox_aug = QVBoxLayout()
         vbox_aug.addWidget(augment_btn)
         vbox_aug.addWidget(augmentation_label)
-        # vbox_aug.setAlignment(Qt.AlignHCenter)
         hbox_buttons.addLayout(vbox_aug)
 
 
-        # hbox_buttons.addWidget(compare_btn)
-        # hbox_buttons.addWidget(show_btn)
-        # hbox_buttons.addWidget(augment_btn)
         layout.addLayout(hbox_buttons, 3, 0, 1, 2)
 
-        # hbox_buttons1 = QHBoxLayout()
-        # hbox_buttons1.addWidget(reconstruct_label)
-        # hbox_buttons1.addWidget(reconstruct_label)
-        # hbox_buttons1.addWidget(reconstruct_label)
-        # hbox_buttons1.addWidget(reconstruct_label)
-        # layout.addLayout(hbox_buttons1, 4, 0)
 
-        # hbox1 = QHBoxLayout()
-        # vlayout.addStretch(1)
-        # layout.addWidget(start_button, 2, 0)
-        # layout.addWidget(stop_button, 2, 1)
-        # vlayout.setAlignment(Qt.AlignRight)
-        # hbox1.addStretch(1)
-        # layout.setAlignment(Qt.AlignTop)
-        # hbox1.addStretch(-1)
-        # vlayout.addLayout(hbox1)
-        # layout.setRowStretch(3, 1)
-        # layout.setColumnStretch(0, 1)
-
-        # # layout.setColumnStretch(1, 2)
-        # # layout.setRowStretch(2, 5)
-        # layout.addWidget(image_viewer, 0, 0, 1, 4)
-        #
-        # # layout.addStretch()
-        # layout.addWidget(start_button, 2, 0)
-        # layout.addWidget(stop_button, 2, 1)
-
-
-        # # button to record
-        # record_btn = QPushButton('Record', self)
-        # record_btn.setToolTip('Press to record with your camera')
-        # record_btn.clicked.connect(self.Record)
-        # record_btn.resize(record_btn.sizeHint())
-        # layout.addWidget(record_btn)
 
 
 
@@ -325,53 +248,10 @@ class View(QWidget):
         self.show()
 
     def style_choice(self, text):
-        # self.style_choice.setText(text)
         self.vid.frame_rate = int(text)
-        print(int(self.vid.frame_rate))
-
-
 
     def disable(self):
-        print ('sending stop signal to the worker object')
         self.sgnStop.emit()  # send a queuedconnection type signal to the worker, because its in another thread
-
-    def Record(self):
-
-        config = camera_config_path
-
-        if config is not None:
-            with open(config) as json_file:
-                config = json.load(json_file)
-
-        output_folder = config['path_dataset']
-
-        path_output = output_folder
-        path_depth = join(output_folder, "depth")
-        path_color = join(output_folder, "color")
-
-        self.make_clean_folder(path_output, path_depth, path_color)
-
-
-    def make_clean_folder(self, path_folder, path_depth, path_color):
-
-        if not exists(path_folder):
-            makedirs(path_folder)
-            makedirs(path_depth)
-            makedirs(path_color)
-        else:
-            choice = QMessageBox.question(self, 'Message', "Do you want to overwrite the previous data?",
-                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-
-            if choice == QMessageBox.Yes:
-                shutil.rmtree(path_folder)
-                makedirs(path_folder)
-                makedirs(path_depth)
-                makedirs(path_color)
-                QMessageBox.Close
-                self.realsense_recorder(path_folder)
-            else:
-                pass
-
 
     def Reconstruct(self):
         self.r = Reconstructor()
@@ -423,12 +303,10 @@ class ShowVideo(QObject):
     def __init__(self, parent=None):
         super(ShowVideo, self).__init__(parent)
         self.frame_rate = 15
-        print("ShowVideo")
 
     @pyqtSlot()
     def startVideo(self):
 
-        print("start videoooooooooooooooooo")
         self._running = True
         config = camera_config_path
         if config is not None:
@@ -451,8 +329,6 @@ class ShowVideo(QObject):
         #  different resolutions of color and depth streams
         config = rs.config()
 
-        print("frame_rate")
-        print(self.frame_rate)
         config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, self.frame_rate)
         config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, self.frame_rate)
 
@@ -524,7 +400,6 @@ class ShowVideo(QObject):
                 images = np.hstack((bg_removed, depth_colormap))
                 color_swapped_image = cv2.cvtColor(images, cv2.COLOR_BGR2RGB)
                 height, width, _ = images.shape
-                print(height, width)
 
                 qt_image = QImage(color_swapped_image,
                                         width,
@@ -568,7 +443,7 @@ class ShowVideo(QObject):
 
     @pyqtSlot()
     def stopVideo(self):
-        print ('stop signal received, switching while loop condition to false')
+        # print ('stop signal received, switching while loop condition to false')
         self._running = False
 
 

@@ -119,7 +119,9 @@ class AugmentationUI(QtWidgets.QWidget):
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
 
+        comboBox.setCurrentIndex(0)
         comboBox.activated[str].connect(self.remove_one_object)
+
 
         self.horizontalGroupBox = QGroupBox('', self.stack2)
         layout = QGridLayout()
@@ -158,7 +160,9 @@ class AugmentationUI(QtWidgets.QWidget):
         for item in self.augmentor.objects_dictionary_by_color:
             if(item in hashed_color_names.keys()):
                 comboBox.addItem(hashed_color_names[item])
+        comboBox.setCurrentIndex(0)
         comboBox.activated[str].connect(self.__select_target_object)
+
 
         objectChoiceII = QtGui.QLabel('Which New Object You Want to Choose?', self.stack4)
         comboBoxII = QtGui.QComboBox(self.stack4)
@@ -167,8 +171,9 @@ class AugmentationUI(QtWidgets.QWidget):
             for item in self.furnitures[key]:
                 comboBoxII.addItem(key + ':' + str(i))
                 i += 1
-
+        comboBoxII.setCurrentIndex(0)
         comboBoxII.activated[str].connect(self.__select_source_object)
+
 
         ChangeButton = QtWidgets.QPushButton(self.stack4)
         ChangeButton.setText('Change')
