@@ -140,11 +140,8 @@ class View(QWidget):
         layout.addLayout(hbox_logo, 0, 0, 1, 1, Qt.AlignLeft)
 
         hbox_image = QHBoxLayout()
-        # hbox_image.addWidget(label)
         hbox_image.addWidget(image_viewer)
-
         layout.addLayout(hbox_image, 0, 1, 1, 1, Qt.AlignLeft)
-
 
         frame_rate = QLabel("Select frame rate", self)
         comboBox = QComboBox(self)
