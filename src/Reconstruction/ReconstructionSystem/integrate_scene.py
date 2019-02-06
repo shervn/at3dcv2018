@@ -42,6 +42,8 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
                     pose_graph_rgbd.nodes[frame_id].pose)
             volume.integrate(rgbd, intrinsic, np.linalg.inv(pose))
 
+
+
     mesh = volume.extract_triangle_mesh()
     mesh.compute_vertex_normals()
     # draw_geometries([mesh])
