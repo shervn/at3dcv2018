@@ -1,6 +1,0 @@
-data/custom_data/new_bed.npy
-data/custom_data/with_chair.npy
-data/custom_data/chair_downsampled_3.npy
-data/custom_data/bookcase_30.npy
-data/custom_data/desk_chair_15.npy
-data/custom_data/desk_chair_30.npy
