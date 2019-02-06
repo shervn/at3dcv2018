@@ -1,0 +1,6 @@
+log/dump_filesEvenOdd_tmp/new_bed_pred.txt
+log/dump_filesEvenOdd_tmp/with_chair_pred.txt
+log/dump_filesEvenOdd_tmp/chair_downsampled_3_pred.txt
+log/dump_filesEvenOdd_tmp/bookcase_30_pred.txt
+log/dump_filesEvenOdd_tmp/desk_chair_15_pred.txt
+log/dump_filesEvenOdd_tmp/desk_chair_30_pred.txt
