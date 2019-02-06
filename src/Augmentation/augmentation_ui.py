@@ -12,7 +12,7 @@ from collections import defaultdict
 from open3d import *
 from config import *
 
-from paths import augmentation_util, furnitures_path
+from paths import augmentation_util
 sys.path.append(augmentation_util)
 from utils import helper
 from utils.icp_helper import get_registeration
@@ -53,7 +53,7 @@ class AugmentationUI(QtWidgets.QWidget):
         self.Stack.addWidget(self.stack4)
 
         label = QLabel(self)
-        pixmap = QPixmap('/Users/shervindehghani/Desktop/hello/at3dcv2018/logo.png')
+        pixmap = QPixmap(logo_path)
         pixmap = pixmap.scaled(pixmap.width()/5, pixmap.height()/5)
         label.setPixmap(pixmap)
 		

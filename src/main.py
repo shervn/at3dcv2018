@@ -13,7 +13,8 @@ from Segmentation.segmentation import Segmenter
 from Augmentation.augmentation import Augmentor
 from Augmentation.augmentation_ui import AugmentationUI
 
-# from paths import camera_config_path, reconstruction_system
+from paths import camera_config_path, reconstruction_system
+from Augmentation.config import *
 # print('rec')
 # print(reconstruction_system)
 
@@ -35,7 +36,7 @@ import argparse
 from enum import IntEnum
 import os
 # print(os.listdir())
-import breeze_resources
+import layout.breeze_resources
 
 
 try:
@@ -195,7 +196,7 @@ class View(QWidget):
         # 3d reconstruction
         reconstruct_btn = QPushButton()
         reconstruct_btn.clicked.connect(self.Reconstruct)
-        reconstruct_btn.setIcon(QIcon('construct.png'))
+        reconstruct_btn.setIcon(QIcon('images/construct.png'))
         reconstruct_btn.setIconSize(QSize(70, 70))
         # reconstruct_btn.resize(reconstruct_btn.sizeHint())
         reconstruct_btn.setFixedWidth(100)
@@ -207,7 +208,7 @@ class View(QWidget):
         view_btn = QPushButton()
         view_btn.clicked.connect(self.Augment)
         # show_btn.resize(reconstruct_btn.sizeHint())
-        view_btn.setIcon(QIcon('house.png'))
+        view_btn.setIcon(QIcon('images/house.png'))
         view_btn.setIconSize(QSize(50, 50))
         view_btn.setFixedWidth(100)
         view_btn.setFixedHeight(90)
@@ -218,7 +219,7 @@ class View(QWidget):
         segment_btn = QPushButton()
         segment_btn.clicked.connect(self.Augment)
         # compare_btn.resize(reconstruct_btn.sizeHint())
-        segment_btn.setIcon(QIcon('seg3.png'))
+        segment_btn.setIcon(QIcon('images/seg3.png'))
         segment_btn.setIconSize(QSize(80, 80))
         segment_btn.setFixedWidth(100)
         segment_btn.setFixedHeight(90)
@@ -229,7 +230,7 @@ class View(QWidget):
         show_btn = QPushButton()
         show_btn.clicked.connect(self.Augment)
         # show_btn.resize(reconstruct_btn.sizeHint())
-        show_btn.setIcon(QIcon('view1.png'))
+        show_btn.setIcon(QIcon('images/view1.png'))
         show_btn.setIconSize(QSize(50, 50))
         show_btn.setFixedWidth(100)
         show_btn.setFixedHeight(90)
@@ -239,7 +240,7 @@ class View(QWidget):
         augment_btn = QPushButton()
         augment_btn.clicked.connect(self.Augment)
         # augment_btn.resize(reconstruct_btn.sizeHint())
-        augment_btn.setIcon(QIcon('magic.png'))
+        augment_btn.setIcon(QIcon('images/magic.png'))
         augment_btn.setIconSize(QSize(70, 70))
         augment_btn.setFixedWidth(100)
         augment_btn.setFixedHeight(90)
@@ -382,10 +383,10 @@ class View(QWidget):
 
     def Augment(self):
         
-        name = 'Samples/scene0000_01_vh_clean_2.ply'
+        name = reconstructed_scene
         dummy_pcl = read_point_cloud(name)
 
-        name_labels = 'Samples/scene0000_01_vh_clean_2.labels.ply'
+        name_labels = segmented_reconstructed_scene
         dummy_pcl_labels = read_point_cloud(name_labels)
         
         t = Augmentor(dummy_pcl, dummy_pcl_labels)

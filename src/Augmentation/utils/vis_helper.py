@@ -1,5 +1,5 @@
 from open3d import *
-from config import render_option_path, camera_trajectory_path
+# from config import render_option_path, camera_trajectory_path
 
 def custom_draw_geometry_with_rotation(pcd):
 

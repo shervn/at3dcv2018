@@ -1,6 +1,6 @@
 import os
 
-rel_path = os.path.realpath('') + '/src/'
+rel_path = os.path.realpath('') + '/'
 
 sensors = rel_path + 'Reconstruction/ReconstructionSystem/sensors'
 reconstruction_system = rel_path + 'Reconstruction/ReconstructionSystem/'
