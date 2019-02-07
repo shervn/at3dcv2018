@@ -20,13 +20,12 @@ class Augmentor:
 
         self.pointcloud = pointcloud
         self.labeld_pointcloud = labeld_pointcloud
-
+        
         self.__find_all_objects()
 
     def __show_all_objects(self):
 
         for t in self.objects_dictionary_by_color:
-            print(t)
             pcd = self.get_object_with_hashed_color(t)
             show_pcd([pcd])
 
@@ -35,8 +34,13 @@ class Augmentor:
 
     def remove_object_with_index(self, hashed_color):
 
-        l = range(0, len(self.pointcloud.points))
-        return select_down_sample(self.pointcloud, [x for x in l if x not in self.objects_dictionary_by_color[hashed_color]])
+        l = list(range(0, len(self.pointcloud.points)))
+        print(len(l))
+        for x in self.objects_dictionary_by_color[hashed_color]:
+                l.remove(x)
+
+        u = select_down_sample(self.pointcloud, l)
+        return u
     
     def change_object(self, object_to_change, source_pointcloud):
 
@@ -45,12 +49,8 @@ class Augmentor:
         scene_without_old_object = self.remove_object_with_index(object_to_change_hash)
         old_object = self.get_object_with_hashed_color(object_to_change_hash)
 
-        # source = self.__get_new_object_from_dataset(object_to_change)
-        source = source_pointcloud
+        transformed_new_object = self.__automated_registraion(source_pointcloud, old_object)
 
-        transformed_new_object = self.__automated_registraion(source, old_object)
-
-        # show_pcd([transformed_new_object, old_object])
         return transformed_new_object, scene_without_old_object
 
     def __get_hashed_color_of_object_from_name(self, object_name):
@@ -116,23 +116,24 @@ class Augmentor:
 
         self.objects_dictionary_by_color = l
 
+
     def ــget_object_hash_by_label_color(self, color):
 
         hashed_color = str(color[0]) + '-' + str(color[1]) + '-' + str(color[2])
         return hashed_color
 
-    # def __pick_points(self, pcd):
-    #     #only needed when using __manul_registration
+    def __pick_points(self, pcd):
+        #only needed when using __manul_registration
 
-    #     print("")
-    #     print("1) Please pick at least three correspondences using [shift + left click]")
-    #     print("   Press [shift + right click] to undo point picking")
-    #     print("2) Afther picking points, press q for close the window")
+        print("")
+        print("1) Please pick at least three correspondences using [shift + left click]")
+        print("   Press [shift + right click] to undo point picking")
+        print("2) Afther picking points, press q for close the window")
 
-    #     vis = VisualizerWithEditing()
-    #     vis.create_window()
-    #     vis.add_geometry(pcd)
-    #     vis.run()
-    #     vis.destroy_window()
+        vis = VisualizerWithEditing()
+        vis.create_window()
+        vis.add_geometry(pcd)
+        vis.run()
+        vis.destroy_window()
 
-    #     return vis.get_picked_points()
+        return vis.get_picked_points()

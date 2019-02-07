@@ -211,7 +211,7 @@ class View(QWidget):
         augment_btn.setIconSize(QSize(70, 70))
         augment_btn.setFixedWidth(100)
         augment_btn.setFixedHeight(90)
-        augmentation_label = QLabel("        Magic", self)
+        augmentation_label = QLabel("        Augment", self)
 
 
 
@@ -273,7 +273,7 @@ class View(QWidget):
 
         name_labels = segmented_reconstructed_scene
         dummy_pcl_labels = read_point_cloud(name_labels)
-        
+
         t = Augmentor(dummy_pcl, dummy_pcl_labels)
         self.augmentation_ui = AugmentationUI(t)
 

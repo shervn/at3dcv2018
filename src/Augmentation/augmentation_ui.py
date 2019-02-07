@@ -75,7 +75,7 @@ class AugmentationUI(QtWidgets.QWidget):
         self.Stack.setCurrentIndex(i)
 
     def show_with_trajectory(self):
-        custom_draw_geometry_with_camera_trajectory(self.augmentor.pointcloud)
+        custom_draw_geometry_with_camera_trajectory([self.augmentor.pointcloud])
     def show_labled_point_cloud(self):
         show_pcd([self.augmentor.labeld_pointcloud])
     def show_raw_point_cloud(self):
@@ -84,7 +84,7 @@ class AugmentationUI(QtWidgets.QWidget):
     def show_one_object(self, object_name):
         color = objects_hash[object_name]
         t = self.augmentor.get_object_with_hashed_color(color)
-        show_pcd([t])
+        custom_draw_geometry_with_rotation([t])
 
     def remove_one_object(self, object_name):
         color = objects_hash[object_name]
@@ -205,7 +205,7 @@ class AugmentationUI(QtWidgets.QWidget):
         target = self.target_object
 
         [a, b] = self.augmentor.change_object(target, source)
-        show_pcd([a, b])
+        custom_draw_geometry_with_rotation([a, b])
     
 
 def get_objects(name):

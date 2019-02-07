@@ -1,7 +1,7 @@
 
 from open3d import *
 import sys
-from paths import reconstruction_system, reconstruction_config, sensors
+from paths import reconstruction_system, reconstruction_config, sensors, camera_trajectory_path
 sys.path.append(reconstruction_system)
 from run_system import run_system
 

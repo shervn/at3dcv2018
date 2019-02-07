@@ -7,10 +7,10 @@ visualize point clouds of many file types. can set whether to view rgb or label 
 
 import numpy as np
 from open3d import *
-from open3d.open3d.geometry import write_point_cloud
+# from open3d.geometry import write_point_cloud
 import h5py
 from collections import Counter
-from utils_by_tam import *
+# from utils_by_tam import *
 
 file_type = 'txt' # h5, txt, npy, ply
 show_color = 0
@@ -18,9 +18,30 @@ show_label = 1
 show_custom = 0
 assert(show_color + show_label + show_custom <= 1)
 
-POINTNET_ROOT = "/Users/tamtran/Desktop/TUM/1819Winter/Praktikum_ATin3DCV/project/03_repos/pointnet"
+POINTNET_ROOT = ''
 #POINTNET_ROOT = "/usr/stud/tranthi/segmentation/03_repos/pointnet"
-IN_FILE = ''
+# IN_FILE = ''
+
+def label_to_RGB(label):
+
+    mapping = {0.0: [255,0,0], #ceiling #red
+               1.0: [255,128,0], #floor #orange -> yellow
+               2.0: [255,255,0], #wall #yellow
+               3.0: [0,255,0], #beam #green
+               4.0: [0,255,255], #column #skyblue
+               5.0: [0,0,255], #window #blue
+               6.0: [128,0,255], #door #purple -> magenta
+               7.0: [255,0,255], #table #pink -> magenta
+               8.0: [102,0,0], #chair #brown -> red
+               9.0: [102,102,0], #sofa #green-brown -> yellow
+               10.0: [204,255,204], #bookcase #pastel-green -> white
+               11.0: [255,204,255], #board #pinkish-lavender -> white
+               12.0: [64,64,64] #clutter #dark-grey -> white
+               }
+
+    labelc = [mapping[l] for l in label]
+    labelc = np.asarray(labelc)
+    return labelc
 
 if file_type == 'h5':
     IN_FILE = POINTNET_ROOT + "/sem_seg/indoor3d_sem_seg_hdf5_data/ply_data_all_0.h5" # rectangular objs don't quite make sense
@@ -39,7 +60,7 @@ if file_type == 'h5':
 
 if file_type == 'txt':
     #IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump_filesEven_tmp/Area_6_conferenceRoom_1_pred.txt"
-    IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump_filesEven_voxel2/integrated_pred.txt"
+    IN_FILE = POINTNET_ROOT + "sem_seg/log/dump_filesEven_voxel2/integrated_pred.txt"
     #IN_FILE = POINTNET_ROOT + "/sem_seg/log/dump/Area_6_copyRoom_1_pred.txt"
 
     f = open(IN_FILE, 'r') # 6 channels
@@ -48,24 +69,6 @@ if file_type == 'txt':
     data = np.asarray(data)
     data[:,3:6] = data[:,3:6]/255 # 0 to 1 range
     print(data.shape) #(1136617, 6)
-
-
-if file_type == 'npy':
-    IN_FILE = POINTNET_ROOT + "/data/stanford_indoor3d/Area_6_conferenceRoom_1.npy"
-    data = np.load(IN_FILE) # 7 channels, last one maybe class index
-    data = np.asarray(data)
-    data[:, 3:6] = data[:, 3:6] / 255  # 0 to 1 range
-    print(data.shape) #(1136617, 7)
-
-
-if file_type == 'ply':
-    IN_FILE = "/usr/stud/tranthi/Downloads/chair_downsampled_3.ply"
-    pcd = read_point_cloud(IN_FILE)
-    show_color, show_label = False, False
-
-    pcd_points = np.asarray(pcd.points)
-    pcd_colors = np.asarray(pcd.colors)
-    pass
 
 
 if file_type != 'ply':
@@ -77,8 +80,8 @@ if show_label:
     assert (data.shape[-1] > 6)
     if 'label' not in dir(): label = data[:, -1]
     print(Counter(label))
-    labelc = label_to_RGB(label)
-    pcd.colors = Vector3dVector(labelc/255)
+    labelc = Vector3dVector(label_to_RGB(label))
+    pcd.colors = labelc
 if show_custom:
     assert (data.shape[-1] > 6)
     if 'label' not in dir(): label = data[:, -1]

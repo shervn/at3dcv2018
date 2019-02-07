@@ -1,0 +1,5 @@
+Namespace(batch_size=1, block_size=1.0, dump_dir='sem_seg/log/dump_filesEven_voxel2', gpu=0, model_path='sem_seg/log/model_filesEven.ckpt', no_clutter=False, num_point=2048, output_filelist='sem_seg/log/dump_filesEven_voxel2/pred_filelist_integrated.txt', room_data_filelist='sem_seg/meta/tmp_data_list.txt', stride=0.5, visu=False)
+Model restored.
+eval mean loss: 18.710472
+eval accuracy: 0.000000
+all room eval accuracy: 0.000000
