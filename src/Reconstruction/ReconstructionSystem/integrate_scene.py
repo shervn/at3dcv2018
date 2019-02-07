@@ -48,6 +48,7 @@ def scalable_integrate_rgb_frames(path_dataset, intrinsic, config):
     mesh.compute_vertex_normals()
     # draw_geometries([mesh])
     if config["debug_mode"]:
+        print("integrate")
         draw_geometries([mesh])
 
     mesh_name = join(path_dataset, config["template_global_mesh"])

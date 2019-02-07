@@ -53,7 +53,7 @@ def refine_registration(source, target, source_fpfh, target_fpfh, result_ransac,
 
 
 def get_registeration(voxel_size, source, target):
-        
+
     source_down, target_down, source_fpfh, target_fpfh = prepare_dataset(source, target, voxel_size)
 
     result_ransac = execute_global_registration(source_down, target_down,

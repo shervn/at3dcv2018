@@ -66,8 +66,10 @@ def multiscale_icp(source, target, voxel_size, max_iter,
                     result_icp.transformation)
 
     if config["debug_mode"]:
+        print("multiscale_icp")
         draw_registration_result_original_color(source, target,
                 result_icp.transformation)
+
     return (result_icp.transformation, information_matrix)
 
 
@@ -79,8 +81,10 @@ def local_refinement(source, target, transformation_init, config):
             [voxel_size, voxel_size/2.0, voxel_size/4.0], [50, 30, 14],
             config, transformation_init)
     if config["debug_mode"]:
+        print("local_refinement")
         draw_registration_result_original_color(
                 source, target, transformation)
+
     return (transformation, information)
 
 
