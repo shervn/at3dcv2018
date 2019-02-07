@@ -76,8 +76,10 @@ def compute_initial_registration(s, t, source_down, target_down,
     print(transformation)
 
     if config["debug_mode"]:
+        print("register")
         draw_registration_result(source_down, target_down,
                 transformation)
+
     return (True, transformation, information)
 
 

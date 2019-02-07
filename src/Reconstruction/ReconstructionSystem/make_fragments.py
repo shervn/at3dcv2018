@@ -63,6 +63,10 @@ def make_posegraph_for_fragment(path_dataset, sid, eid, color_files,
     pose_graph = PoseGraph()
     trans_odometry = np.identity(4)
     pose_graph.nodes.append(PoseGraphNode(trans_odometry))
+
+    f = open("trajectory.log", "w+")
+
+
     for s in range(sid, eid):
         for t in range(s + 1, eid):
             # odometry
@@ -73,6 +77,18 @@ def make_posegraph_for_fragment(path_dataset, sid, eid, color_files,
                         color_files, depth_files, intrinsic,
                         with_opencv, config)
                 trans_odometry = np.dot(trans, trans_odometry)
+                # print("trans_odometry")
+                # print(trans_odometry)
+
+                ar = np.array_str(trans_odometry)
+                ar = ar.replace("[", "")
+                ar = ar.replace("]", "")
+                ar = ar.replace("  ", "")
+
+                f.write("%d %d %d\n" % (t, t, t+1))
+                f.write(ar)
+                f.write("\n")
+
                 trans_odometry_inv = np.linalg.inv(trans_odometry)
                 pose_graph.nodes.append(PoseGraphNode(trans_odometry_inv))
                 pose_graph.edges.append(
@@ -88,11 +104,18 @@ def make_posegraph_for_fragment(path_dataset, sid, eid, color_files,
                         color_files, depth_files, intrinsic,
                         with_opencv, config)
                 if success:
+
+                    # f.write("%d %d %d\n" % (t, t, t + 1))
+                    # f.write(np.array_str(trans))
+                    # f.write("\n")
+
                     pose_graph.edges.append(
                             PoseGraphEdge(s-sid, t-sid, trans, info,
                                     uncertain = True))
     write_pose_graph(join(path_dataset,
             config["template_fragment_posegraph"] % fragment_id), pose_graph)
+
+    f.close()
 
 
 def integrate_rgb_frames_for_fragment(color_files, depth_files,

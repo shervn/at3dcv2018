@@ -30,5 +30,5 @@ furnitures_path = rel_path_before_src + '/Data/Furnitures/'
 logo_path = rel_path_before_src + '/Images/logo.png'
 
 layout_path = rel_path_before_src + '/Layout'
-images_path = rel_path_before_src + '/Images/newicons'
+images_path = rel_path_before_src + '/Images'
 
