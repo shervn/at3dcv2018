@@ -35,7 +35,6 @@ class Augmentor:
     def remove_object_with_index(self, hashed_color):
 
         l = list(range(0, len(self.pointcloud.points)))
-        print(len(l))
         for x in self.objects_dictionary_by_color[hashed_color]:
                 l.remove(x)
 
@@ -77,7 +76,6 @@ class Augmentor:
 
         picked_id_target = self.__pick_points(target)
         #picked_id_target = old_bed_corners
-        print(picked_id_target)
 
         assert(len(picked_id_source)>=3 and len(picked_id_target)>=3)
         assert(len(picked_id_source) == len(picked_id_target))
